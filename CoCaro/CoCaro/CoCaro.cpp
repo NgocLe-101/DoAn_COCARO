@@ -50,7 +50,7 @@ int main()
 						char c;
 						do
 						{
-							c = AskContinue();
+							c = AskContinue(winner);
 						} while (c!='Y'&&c!='N');
 						if (c == 'Y')
 							StartGame();

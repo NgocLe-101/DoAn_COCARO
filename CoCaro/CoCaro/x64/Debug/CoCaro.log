@@ -1,4 +1,4 @@
 ﻿  CoCaro.cpp
-D:\Codes\TESTING_AREA\CoCaro\CoCaro\CONSTANT_VALUES.h(26,1): warning C4005: 'TOP_CROSS': macro redefinition
-D:\Codes\TESTING_AREA\CoCaro\CoCaro\CONSTANT_VALUES.h(21,1): message : see previous definition of 'TOP_CROSS'
-  CoCaro.vcxproj -> D:\Codes\TESTING_AREA\CoCaro\x64\Debug\CoCaro.exe
+D:\Codes\DoAn_COCARO\CoCaro\CoCaro\CONSTANT_VALUES.h(26,1): warning C4005: 'TOP_CROSS': macro redefinition
+D:\Codes\DoAn_COCARO\CoCaro\CoCaro\CONSTANT_VALUES.h(21,1): message : see previous definition of 'TOP_CROSS'
+  CoCaro.vcxproj -> D:\Codes\DoAn_COCARO\CoCaro\x64\Debug\CoCaro.exe

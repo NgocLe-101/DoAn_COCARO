@@ -195,9 +195,28 @@ int ProcessFinish(int pWhoWin) {
 	return pWhoWin;
 }
 
-int AskContinue() {
+int AskContinue(int pWhoWin) {
 	Sleep(400);
-	DrawBigText("AGAIN.txt", c_def, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x-7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y-5);
-	DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y+2);
-	return toupper(_getch());
+	int pos = 1;
+	int NAVIGATOR;
+	do {
+		switch (pos)
+		{
+		case 1:
+			DrawBigText("AGAIN.txt", pWhoWin==-1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
+			DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+			break;
+		case 2:
+			DrawBigText("AGAIN.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
+			DrawBigText("RETURN_MENU.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+		}
+		NAVIGATOR = toupper(_getch());
+		if (NAVIGATOR == 'W') --pos;
+		else if (NAVIGATOR == 'S') ++pos;
+		if (pos > 2) pos = 1;
+		else if (pos<1) pos = 2;
+	} while (NAVIGATOR != 13);
+	if (pos == 1) return 'Y';
+	return 'N';
+	/*return toupper(_getch());*/
 }
