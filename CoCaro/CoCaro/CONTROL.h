@@ -11,6 +11,29 @@ void StartGame() {
 	DrawPlayer();
 }
 
+bool StartInGameMENU() {
+	int pos = 0;
+	int NAVIGATE;
+	while (true) {
+		NAVIGATE = toupper(_getch());
+		switch (NAVIGATE)
+		{
+		case 'W':
+			--pos;
+			break;
+		case 'S':
+			++pos;
+			break;
+		case 17:
+			if (pos==0) {/*save */}
+			else if (pos == 1) {/*mute */}
+			else if (pos == 2) { ExitGame(); return 0; }
+		}
+		if (pos > 2) pos = 1;
+		else if (pos < 0) pos = 2;
+	}
+}
+
 void MoveRight() {
 	if (_X < _A[BOARD_SIZE - 1][BOARD_SIZE - 1].x) {
 		_X += HORIZONTAL_SPACE;

@@ -40,6 +40,49 @@ int CheckBoard(int pX, int pY) {
 	return 0;
 }
 
+void PrintWinner(int whoWin, int color) {
+	SetColor(color);
+	if (whoWin == -1)
+		wcout << X_SYM;
+	else
+		wcout << O_SYM;
+	SetColor(c_def);
+}
+
+void HoverWinner(int x, int y, int i, int WhoWin, int color) {
+	switch (i)
+	{
+	case 0: // Hang ngang
+		for (int i = 0; i < 5; i++)
+			if (_A[x][y + i].c == WhoWin) {
+				GotoXY(_A[x][y+i].x, _A[x][y+i].y);
+				PrintWinner(WhoWin, color);
+			}
+		break;
+	case 1:
+		for (int i = 0; i < 5; i++)
+			if (_A[x + i][y].c == WhoWin) {
+				GotoXY(_A[x+i][y].x, _A[x + i][y].y);
+				PrintWinner(WhoWin, color);
+			}
+		break;
+	case 2:
+		for (int i = 0; i < 5; i++)
+			if (_A[x + i][y + i].c == WhoWin) {
+				GotoXY(_A[x + i][y+i].x, _A[x + i][y+i].y);
+				PrintWinner(WhoWin, color);
+			}
+		break;
+	case 3:
+		for (int i = 0; i < 5; i++)
+			if (_A[x + i][y - i].c == WhoWin) {
+				GotoXY(_A[x + i][y-i].x, _A[x + i][y-i].y);
+				PrintWinner(WhoWin, color);
+			}
+		break;
+	}
+}
+
 int CheckWin(int x, int y) {
 	int dem[4] = { 0,0,0,0 };
 	/*
@@ -49,7 +92,7 @@ int CheckWin(int x, int y) {
 	3: Hang cheo trai
 	*/
 	// Check ngang
-	for (int i = 0; x + i < BOARD_SIZE && i < 5; i++) {
+	for (int i = 0; y + i < BOARD_SIZE && i < 5; i++) {
 		dem[0] += _A[x][y + i].c;
 		if (abs(dem[0]) == 5)
 			break;
@@ -73,32 +116,39 @@ int CheckWin(int x, int y) {
 			break;
 	}
 	for (int i = 0; i < 4; i++) {
-		if (abs(dem[i]) == 5)
+		if (abs(dem[i]) == 5) {
+			HoverWinner(x, y, i, dem[i] / 5, (dem[i]/5==-1 ? 228 : 234));
 			return dem[i] / 5;
+		}
+			
 		else if (abs(dem[i]) == 4) {
 			switch (i)
 			{
 			case 0:
 				if (y > 0 && y < BOARD_SIZE - 4)
 					if (_A[x][y - 1].c == 0 && _A[x][y + 4].c == 0) {
+							HoverWinner(x, y, i, dem[i] / 4, (dem[i] / 4 == -1 ? 228 : 234));
 							return dem[i] / 4;
 					}
 				break;
 			case 1:
 				if (x > 0 && x < BOARD_SIZE - 4)
 					if (_A[x - 1][y].c == 0 && _A[x + 4][y].c == 0) {
+							HoverWinner(x, y, i, dem[i] / 4, (dem[i] / 4 == -1 ? 228 : 234));
 							return dem[i] / 4;
 					}
 				break;
 			case 2:
 				if (x-1 >= 0 && y - 1 >= 0 && x+4<BOARD_SIZE && y+4<BOARD_SIZE)
 					if (_A[x - 1][y - 1].c == 0 && _A[x + 4][y + 4].c == 0) {
+							HoverWinner(x, y, i, dem[i] / 4, (dem[i] / 4 == -1 ? 228 : 234));
 							return dem[i] / 4;
 					}
 				break;
 			case 3:
 				if (x-1 >= 0 && y+1 < BOARD_SIZE&&x+4<BOARD_SIZE&&y-4>=0)
 					if (_A[x - 1][y + 1].c == 0 && _A[x + 4][y - 4].c == 0) {
+							HoverWinner(x, y, i, dem[i] / 4, (dem[i] / 4 == -1 ? 228 : 234));
 							return dem[i] / 4;
 					}
 				break;
@@ -116,7 +166,7 @@ int TestBoard() {
 				if (abs(CheckWin(i, j)))
 					return CheckWin(i, j);
 				else
-					DrawChecker++;
+					++DrawChecker;
 		}
 	}
 	if (DrawChecker == BOARD_SIZE * BOARD_SIZE)

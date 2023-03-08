@@ -16,8 +16,10 @@ int main()
 	{
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) {
-			ExitGame();
-			return 1;
+			if (!StartInGameMENU())
+				return 0;
+			/*ExitGame();
+			return 1;*/
 		}
 		else {
 			if (_COMMAND == 'A') MoveLeft();
