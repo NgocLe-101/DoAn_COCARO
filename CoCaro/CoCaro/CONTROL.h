@@ -15,6 +15,7 @@ bool StartInGameMENU() {
 	int pos = 0;
 	int NAVIGATE;
 	while (true) {
+		DrawInGameMenuUSING(pos);
 		NAVIGATE = toupper(_getch());
 		switch (NAVIGATE)
 		{
@@ -24,14 +25,20 @@ bool StartInGameMENU() {
 		case 'S':
 			++pos;
 			break;
-		case 17:
+		case 13:
 			if (pos==0) {/*save */}
 			else if (pos == 1) {/*mute */}
 			else if (pos == 2) { ExitGame(); return 0; }
+			break;
+		case 27:
+			DrawInGameMenuUSING(-1);
+			GotoXY(_X, _Y);
+			return 1;
 		}
-		if (pos > 2) pos = 1;
+		if (pos > 2) pos = 0;
 		else if (pos < 0) pos = 2;
 	}
+	return 1;
 }
 
 void MoveRight() {

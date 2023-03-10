@@ -4,10 +4,11 @@
 #include "CONSTANT_VALUES.h"
 
 void FixConsoleWindow() {
-	HWND consoleWindow = GetConsoleWindow();
-	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
 	RECT r;
 	HANDLE hConsole;
+	HWND consoleWindow = GetConsoleWindow();
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+	
 
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
@@ -158,11 +159,25 @@ void DrawBorder(int x, int y, int width, int height, wchar_t border_type, int co
 	SetColor(c_def);
 }
 
+void DrawInGameMenuUSING(int pos) {
+	if (pos >= 0) {
+		DrawBigText("SAVE.txt", pos == 0 ? c_def : c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14);
+		DrawBigText("MUTE.txt", pos == 1 ? c_def : c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
+		DrawBigText("EXIT.txt", pos == 2 ? c_def : c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE * 2);
+	}
+	else {
+		DrawBigText("SAVE.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14);
+		DrawBigText("MUTE.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
+		DrawBigText("EXIT.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE * 2);
+	}
+}
+	
+
 void DrawInGameMenu() {
 	DrawBigText("IG_TITLE.txt", c_red, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 2, _A[0][BOARD_SIZE - 1].y + 1);
-	DrawBigText("SAVE.txt", c_def, _A[0][BOARD_SIZE-1].x+B_WIDTH*6, _A[0][BOARD_SIZE-1].y+14);
-	DrawBigText("MUTE.txt", c_def, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
-	DrawBigText("EXIT.txt", c_def, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE*2);
+	DrawBigText("SAVE.txt", c_gray, _A[0][BOARD_SIZE-1].x+B_WIDTH*6, _A[0][BOARD_SIZE-1].y+14);
+	DrawBigText("MUTE.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
+	DrawBigText("EXIT.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE*2);
 	DrawBorder(_A[0][BOARD_SIZE - 1].x + B_WIDTH * 3+2, _A[0][BOARD_SIZE - 1].y + 10, 36, 20, DL_T,c_green);
 	GotoXY(_X, _Y);
 }

@@ -18,7 +18,6 @@ using namespace std;
 #define HEIGHT 720
 #define HORIZONTAL_LINE (wchar_t)0x2500
 #define VERTICAL_LINE (wchar_t)0x2502
-#define TOP_CROSS (wchar_t)0x251C
 #define TOP_RIGHT (wchar_t)0x2510
 #define TOP_LEFT (wchar_t)0x250C
 #define BOTTOM_LEFT (wchar_t)0x2514
@@ -33,7 +32,7 @@ using namespace std;
 // BOX value
 #define B_WIDTH 4
 #define B_HEIGHT 1
-#define IM_SPACE 4
+#define IM_SPACE 5
 // Color settings
 #define c_red 244
 #define c_green 250
