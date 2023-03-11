@@ -1,12 +1,18 @@
-#include <iostream>
-#include "View.h"
+﻿#include "View.h"
 #include "CONSTANT_VALUES.h"
 #include "CONTROL.h"
 #include "MODEL.h"
-using namespace std;
+
+
+_POINT _A[BOARD_SIZE][BOARD_SIZE]; //Ma trận bàn cờ
+int _TURN; //true là lượt người thứ nhất và false là lượt người thứ hai
+int _COMMAND; // Biến nhận giá trị phím người dùng nhập
+int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
 
 int main()
 {
+	
+
 	_setmode(_fileno(stdin), _O_WTEXT);
 	_setmode(_fileno(stdout), _O_WTEXT);
 	FixConsoleWindow();

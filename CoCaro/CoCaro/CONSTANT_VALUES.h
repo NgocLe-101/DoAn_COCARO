@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
@@ -66,7 +67,8 @@ using namespace std;
 struct _POINT {
 	int x, y, c;
 }; // x: tọa độ dòng, y: tọa độ cột, c: đánh dấu
-_POINT _A[BOARD_SIZE][BOARD_SIZE]; //Ma trận bàn cờ
-int _TURN; //true là lượt người thứ nhất và false là lượt người thứ hai
-int _COMMAND; // Biến nhận giá trị phím người dùng nhập
-int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
+extern _POINT _A[BOARD_SIZE][BOARD_SIZE]; //Ma trận bàn cờ
+extern int _TURN; //true là lượt người thứ nhất và false là lượt người thứ hai
+extern int _COMMAND; // Biến nhận giá trị phím người dùng nhập
+extern int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
+

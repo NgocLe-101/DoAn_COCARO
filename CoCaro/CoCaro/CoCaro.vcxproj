@@ -128,6 +128,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CoCaro.cpp" />
+    <ClCompile Include="CONTROL.cpp" />
+    <ClCompile Include="MODEL.cpp" />
+    <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CONSTANT_VALUES.h" />
