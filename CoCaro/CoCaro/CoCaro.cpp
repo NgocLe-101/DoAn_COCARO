@@ -10,14 +10,18 @@ int main()
 	_setmode(_fileno(stdin), _O_WTEXT);
 	_setmode(_fileno(stdout), _O_WTEXT);
 	FixConsoleWindow();
+	ChangeConsole();
 	StartGame();
 	bool validEnter = true;
 	while (true)
 	{
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) {
-			if (!StartInGameMENU())
+			if (!StartInGameMENU()) {
+				DrawExit();
+				Sleep(100);
 				return 0;
+			}
 			/*ExitGame();
 			return 1;*/
 		}

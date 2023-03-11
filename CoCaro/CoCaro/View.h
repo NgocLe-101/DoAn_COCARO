@@ -4,17 +4,20 @@
 #include "CONSTANT_VALUES.h"
 
 void FixConsoleWindow() {
-	RECT r;
-	HANDLE hConsole;
 	HWND consoleWindow = GetConsoleWindow();
 	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
 	
-
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
 	SetWindowLong(consoleWindow, GWL_STYLE, style);
+}
+
+void ChangeConsole() {
+	RECT r;
+	HWND consoleWindow = GetConsoleWindow();
+	HANDLE hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTitleA("Co Caro");
-	SetConsoleTextAttribute(hConsole, 240);
+	SetConsoleTextAttribute(hConsole, c_def);
 	GetWindowRect(consoleWindow, &r);
 	MoveWindow(consoleWindow, 0, 0, WIDTH, HEIGHT, true);
 }
@@ -85,7 +88,7 @@ void PrintText(wstring text, int color, int x, int y) {
 	GotoXY(x, y);
 	SetColor(color);
 	wcout << text;
-	SetColor(240);
+	SetColor(c_def);
 }
 
 void EraseBox(int x, int y, int width, int height, int color) {
@@ -96,7 +99,7 @@ void EraseBox(int x, int y, int width, int height, int color) {
 			wcout << L" ";
 		}
 	}
-	SetColor(240);
+	SetColor(c_def);
 }
 
 void DrawBigText(string filename, int color, int x, int y) {
@@ -156,6 +159,23 @@ void DrawBorder(int x, int y, int width, int height, wchar_t border_type, int co
 		for (int i = 1; i < width - 1; i++) wcout << DL_T_HORIZONTAL;
 		wcout << DL_T_BOTRIGHTCORNER;
 	}
+	else if (border_type == DM_T) {
+		GotoXY(x, y);
+		SetColor(color);
+		wcout << DM_T_CORNER;
+		for (int i = 1; i < width - 1; i++) wcout << DM_T_HORIZONTAL;
+		wcout << DM_T_CORNER;
+		for (int i = 1; i < height - 1; i++) {
+			GotoXY(x, y + i);
+			wcout << DM_T_VERTICAL;
+			GotoXY(x + width - 1, y + i);
+			wcout << DM_T_VERTICAL;
+		}
+		GotoXY(x, y + height - 1);
+		wcout << DM_T_CORNER;
+		for (int i = 1; i < width - 1; i++) wcout << DM_T_HORIZONTAL;
+		wcout << DM_T_CORNER;
+	}
 	SetColor(c_def);
 }
 
@@ -175,10 +195,8 @@ void DrawInGameMenuUSING(int pos) {
 
 void DrawInGameMenu() {
 	DrawBigText("IG_TITLE.txt", c_red, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 2, _A[0][BOARD_SIZE - 1].y + 1);
-	DrawBigText("SAVE.txt", c_gray, _A[0][BOARD_SIZE-1].x+B_WIDTH*6, _A[0][BOARD_SIZE-1].y+14);
-	DrawBigText("MUTE.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
-	DrawBigText("EXIT.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE*2);
-	DrawBorder(_A[0][BOARD_SIZE - 1].x + B_WIDTH * 3+2, _A[0][BOARD_SIZE - 1].y + 10, 36, 20, DL_T,c_green);
+	DrawInGameMenuUSING(-1);
+	DrawBorder(_A[0][BOARD_SIZE - 1].x + B_WIDTH * 3+2, _A[0][BOARD_SIZE - 1].y + 10, 36, 20, DM_T,c_green);
 	GotoXY(_X, _Y);
 }
 
@@ -234,4 +252,8 @@ int AskContinue(int pWhoWin) {
 	if (pos == 1) return 'Y';
 	return 'N';
 	/*return toupper(_getch());*/
+}
+
+void DrawExit() {
+	DrawBigText("EXITGAME_SCREEN.txt", 225, 0, 0,50);
 }

@@ -59,6 +59,10 @@ using namespace std;
 #define DL_T_TOPRIGHTCORNER (wchar_t)0x2557
 #define DL_T_BOTLEFTCORNER (wchar_t)0x255A
 #define DL_T_BOTRIGHTCORNER (wchar_t)0x255D
+#define DM_T 2
+#define DM_T_CORNER (wchar_t)0x25C7
+#define DM_T_HORIZONTAL (wchar_t)0xA60F
+#define DM_T_VERTICAL (wchar_t)0x2551
 struct _POINT {
 	int x, y, c;
 }; // x: tọa độ dòng, y: tọa độ cột, c: đánh dấu
