@@ -11,8 +11,6 @@ int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
 
 int main()
 {
-	
-
 	_setmode(_fileno(stdin), _O_WTEXT);
 	_setmode(_fileno(stdout), _O_WTEXT);
 	FixConsoleWindow();

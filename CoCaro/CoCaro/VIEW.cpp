@@ -11,12 +11,13 @@ void FixConsoleWindow() {
 void ChangeConsole() {
 	RECT r;
 	HWND consoleWindow = GetConsoleWindow();
+	HWND hDesktop = GetDesktopWindow();
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTitleA("Co Caro");
 	SetConsoleTextAttribute(hConsole, c_def);
-	GetWindowRect(consoleWindow, &r);
-	MoveWindow(consoleWindow, 0, 0, WIDTH, HEIGHT, true);
+	GetWindowRect(hDesktop, &r);
+	MoveWindow(consoleWindow, r.right/2-WIDTH/2, r.bottom/2-HEIGHT/2, WIDTH, HEIGHT, true);
 }
 
 void DrawTableLine(int numOfCol, wchar_t mainSym, wchar_t subSym, int width)
