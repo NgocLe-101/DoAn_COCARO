@@ -15,6 +15,15 @@ int main()
 	_setmode(_fileno(stdout), _O_WTEXT);
 	FixConsoleWindow();
 	ChangeConsole();
+
+	bool run = true;
+	int option;
+	do
+	{
+		option = SelectMenu(MainMenu());
+		RunMainMenu(run, option);
+	} while (run);
+
 	StartGame();
 	bool validEnter = true;
 	while (true)
@@ -74,7 +83,6 @@ int main()
 			}
 		}
 	}
-    return 0;
 }
 
 

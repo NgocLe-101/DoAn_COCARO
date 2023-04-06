@@ -62,3 +62,76 @@ void MoveUp() {
 		GotoXY(_X, _Y);
 	}
 }
+
+int SelectMenu(_MENU menu)
+{
+	int cursor = 1;
+	char key;
+
+	PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y);
+
+	do
+	{
+		key = _getch();
+		if (key == ARROW_UP && cursor > 1)
+		{
+			PrintText(L"    ", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			cursor--;
+			PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+		}
+		else if (key == ARROW_DOWN && cursor < menu.options)
+		{
+			PrintText(L"    ", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			cursor++;
+			PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+		}
+		else if (key == ESC)
+		{
+			return -1;
+		}
+
+		
+	} while (key != ENTER);
+	return cursor;
+}
+
+void RunMainMenu(bool& run, int option)
+	{
+		int loadOption;
+		switch (option)
+		{
+		case 1:
+			/*SetPlayer(_PLAYER1, _PLAYER2);
+			StartGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
+			RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);*/
+			run = false;
+			break;
+		case 2:
+			/*system("cls");
+			loadOption = SelectMenu(LoadingMenu());
+			if (loadOption == -1) break;
+			else
+			{
+				LoadGame(RunLoadingMenu(loadOption), _A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
+				RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
+				break;
+			}*/
+		case 3:
+			/*do
+			{
+				ShowRank();
+			} while (_getch() != ESC);
+			break;*/
+		case 4:
+			do
+			{
+				ShowHelp();
+			} while (_getch() != ESC);
+			break;
+		case 5:case -1:
+			ExitGame();
+			run = false;
+			break;
+		}
+	}
+

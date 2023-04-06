@@ -49,5 +49,11 @@
     <Text Include="..\Assets\IN_GAME\SETTINGS\EXIT.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="CARO.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="HELP.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
