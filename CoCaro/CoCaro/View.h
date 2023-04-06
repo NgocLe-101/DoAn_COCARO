@@ -35,4 +35,12 @@ int ProcessFinish(int pWhoWin);
 
 int AskContinue(int pWhoWin);
 
-void DrawExit();
+void DrawExit();	
+
+_MENU MainMenu();
+
+void DrawMenuBackGround();
+
+void ShowHelp();
+
+

@@ -11,3 +11,6 @@ void MoveRight();
 void MoveLeft();
 void MoveDown();
 void MoveUp();
+
+int SelectMenu(_MENU menu);
+void RunMainMenu(bool& run, int option);

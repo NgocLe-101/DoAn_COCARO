@@ -17,6 +17,8 @@ using namespace std;
 #define TOP 5
 #define WIDTH 1100
 #define HEIGHT 720
+#define X_CENTER WIDTH / 16 + 2
+#define Y_CENTER HEIGHT / 32
 #define HORIZONTAL_LINE (wchar_t)0x2500
 #define VERTICAL_LINE (wchar_t)0x2502
 #define TOP_RIGHT (wchar_t)0x2510
@@ -71,4 +73,19 @@ extern _POINT _A[BOARD_SIZE][BOARD_SIZE]; //Ma trận bàn cờ
 extern int _TURN; //true là lượt người thứ nhất và false là lượt người thứ hai
 extern int _COMMAND; // Biến nhận giá trị phím người dùng nhập
 extern int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
+
+struct _MENU
+{
+	int options;	 //So chuc nang cua Menu
+	int x;			 // Toa do cua diem bat 
+	int y;			 //dau cua chuc nang dau tien
+	int cursorColor; //Mau con tro chon menu
+};
+
+#define ENTER 13
+#define ESC 27
+#define ARROW_UP 72
+#define ARROW_DOWN 80
+#define ARROW_LEFT 75
+#define ARROW_RIGHT 77
 

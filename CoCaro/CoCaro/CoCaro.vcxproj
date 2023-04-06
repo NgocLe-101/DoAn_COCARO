@@ -141,6 +141,8 @@
   <ItemGroup>
     <Text Include="..\Assets\IN_GAME\SETTINGS\EXIT.txt" />
     <Text Include="..\Assets\IN_GAME\SETTINGS\SAVE.txt" />
+    <Text Include="CARO.txt" />
+    <Text Include="HELP.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

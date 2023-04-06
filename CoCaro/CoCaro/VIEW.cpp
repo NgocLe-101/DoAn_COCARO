@@ -1,4 +1,4 @@
-#include "View.h"
+﻿#include "View.h"
 
 void FixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -254,4 +254,58 @@ int AskContinue(int pWhoWin) {
 
 void DrawExit() {
 	DrawBigText("EXITGAME_SCREEN.txt", 225, 0, 0, 50);
+}
+
+void ShowHelp()
+{
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "HELP.txt";
+	int x = X_CENTER - 15;
+	int y = Y_CENTER - 10;
+	wstring line;
+	int i = 0;
+	wifstream helpFile(filename.c_str());
+	helpFile.imbue(utf8_locale);
+	/*std::fstream helpFile;
+	helpFile.open("Help.txt", std::fstream::in);*/
+
+	system("cls");
+	while (getline(helpFile, line))
+	{
+		PrintText(line, 243, x, y + i);
+		i++;
+	}
+}
+
+void DrawMenuBackGround()
+{
+	
+}
+
+_MENU MainMenu()
+{
+	_MENU menu;
+
+	menu.options = 6;
+	menu.x = X_CENTER - 13;
+	menu.y = Y_CENTER + 5;
+	menu.cursorColor = 244;
+
+	system("cls");
+	DrawBigText("CARO.txt", 252, X_CENTER - 35, 1);
+	PrintText(L"***************************", 244, menu.x, menu.y - 3);
+	PrintText(L"*Chào mừng các bạn đến với game caro*", 244, menu.x - 5, menu.y - 2);
+	PrintText(L"***************************", 244, menu.x, menu.y - 1);
+	PrintText(L"         Chơi với người        ", 244, menu.x, menu.y);
+	PrintText(L"         Chơi với máy          ", 244, menu.x, menu.y + 1);
+	PrintText(L"         Lưu game         ", 244, menu.x, menu.y + 2);
+	PrintText(L"         Bảng xếp hạng          ", 244, menu.x, menu.y + 3);
+	PrintText(L"         Trợ giúp            ", 244, menu.x, menu.y + 4);
+	PrintText(L"         Thoát game         ", 244, menu.x, menu.y + 5);
+
+
+	return menu;
 }
