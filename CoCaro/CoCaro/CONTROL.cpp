@@ -106,7 +106,12 @@ void RunMainMenu(bool& run, int option)
 			RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);*/
 			run = false;
 			break;
+
 		case 2:
+			/*
+				Danh voi may
+			*/
+		case 3:
 			/*system("cls");
 			loadOption = SelectMenu(LoadingMenu());
 			if (loadOption == -1) break;
@@ -116,20 +121,22 @@ void RunMainMenu(bool& run, int option)
 				RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
 				break;
 			}*/
-		case 3:
+		case 4:
 			/*do
 			{
 				ShowRank();
 			} while (_getch() != ESC);
 			break;*/
-		case 4:
+		case 5:
 			do
 			{
 				ShowHelp();
 			} while (_getch() != ESC);
 			break;
-		case 5:case -1:
+		case 6:case -1:
 			ExitGame();
+			DrawExit();
+			Sleep(100);
 			run = false;
 			break;
 		}

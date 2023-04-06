@@ -289,7 +289,7 @@ _MENU MainMenu()
 {
 	_MENU menu;
 
-	menu.options = 5;
+	menu.options = 6;
 	menu.x = X_CENTER - 13;
 	menu.y = Y_CENTER + 5;
 	menu.cursorColor = 244;
@@ -299,11 +299,12 @@ _MENU MainMenu()
 	PrintText(L"***************************", 244, menu.x, menu.y - 3);
 	PrintText(L"*Chào mừng các bạn đến với game caro*", 244, menu.x - 5, menu.y - 2);
 	PrintText(L"***************************", 244, menu.x, menu.y - 1);
-	PrintText(L"         Chơi game        ", 244, menu.x, menu.y);
-	PrintText(L"         Lưu game         ", 244, menu.x, menu.y + 1);
-	PrintText(L"         Bảng xếp hạng          ", 244, menu.x, menu.y + 2);
-	PrintText(L"         Trợ giúp            ", 244, menu.x, menu.y + 3);
-	PrintText(L"         Thoát game         ", 244, menu.x, menu.y + 4);
+	PrintText(L"         Chơi với người        ", 244, menu.x, menu.y);
+	PrintText(L"         Chơi với máy          ", 244, menu.x, menu.y + 1);
+	PrintText(L"         Lưu game         ", 244, menu.x, menu.y + 2);
+	PrintText(L"         Bảng xếp hạng          ", 244, menu.x, menu.y + 3);
+	PrintText(L"         Trợ giúp            ", 244, menu.x, menu.y + 4);
+	PrintText(L"         Thoát game         ", 244, menu.x, menu.y + 5);
 
 
 	return menu;
