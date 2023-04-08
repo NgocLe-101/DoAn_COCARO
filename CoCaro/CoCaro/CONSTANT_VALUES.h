@@ -9,7 +9,9 @@
 #include <vector>
 #include <fcntl.h>
 #include <io.h>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 //Constant Values
 #define SPACE 32
 #define BOARD_SIZE 16
@@ -73,7 +75,7 @@ extern _POINT _A[BOARD_SIZE][BOARD_SIZE]; //Ma trận bàn cờ
 extern int _TURN; //true là lượt người thứ nhất và false là lượt người thứ hai
 extern int _COMMAND; // Biến nhận giá trị phím người dùng nhập
 extern int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
-
+extern vector<vector<wstring>> number_font; //Vector chứa font số
 struct _MENU
 {
 	int options;	 //So chuc nang cua Menu

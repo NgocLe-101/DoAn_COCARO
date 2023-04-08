@@ -15,6 +15,7 @@ void ResetData() {
 	_TURN = -1;
 	_COMMAND = -1;
 	_X = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].x; _Y = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].y;
+
 }
 
 void GabageCollect() {
@@ -211,4 +212,45 @@ int TestBoard() {
 	if (DrawChecker == BOARD_SIZE * BOARD_SIZE)
 		return 0;
 	return 2;
+}
+
+void TimeUpdating(high_resolution_clock::time_point& iniTime, int& seconds) {
+	high_resolution_clock::time_point finalTime = high_resolution_clock::now();
+	duration<double> time_span = finalTime - iniTime;
+	if (time_span.count() >= 1) {
+		iniTime = finalTime;
+		TimeUpdate(seconds);
+	}
+}
+
+void GetFont() {
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "NUMBER_FONT.txt";
+	wifstream stream(filename.c_str());
+	stream.imbue(utf8_locale);
+	wstring line;
+	vector<wstring> line1;
+	int count = 0;
+	while (getline(stream, line)) {
+		line1.push_back(line);
+		++count;
+	}
+	for (int i = 0; i < line1[0].size(); i++) {
+		if (line1[0][i] != ' ' && line1[0][i] != 12288) {
+			for (int j = i; j < line1[0].size(); j++) {
+				if (line1[0][j] == ' ' || line1[0][j] == 12288) {
+					vector<wstring> v;
+					for (int k = 0; k < count; k++) {
+						v.push_back(line1[k].substr(i, j - i));
+					}
+					number_font.push_back(v);
+					i = j;
+					break;
+				}
+			}
+		}
+	}
 }

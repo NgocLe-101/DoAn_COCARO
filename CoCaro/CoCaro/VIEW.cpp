@@ -199,9 +199,9 @@ void DrawInGameMenu() {
 }
 
 void DrawPlayer() {
-	DrawBigText("O_PLAYER.txt", c_green, LEFT, 0);
-	GotoXY(LEFT + B_WIDTH * (BOARD_SIZE / 2), 3);
-	wcout << TIMER << "  0:15";
+	DrawBigText("O_PLAYER.txt", c_lime, LEFT, 0);
+	int tempTime = 16;
+	TimeUpdate(tempTime);
 	DrawBigText("X_PLAYER.txt", c_red, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
 	GotoXY(_X, _Y);
 }
@@ -228,26 +228,37 @@ int ProcessFinish(int pWhoWin) {
 
 int AskContinue(int pWhoWin) {
 	Sleep(400);
-	int pos = 1;
-	int NAVIGATOR;
+	int pos = 0;
+	int NAVIGATOR = 0;
+	bool change = true;
 	do {
-		switch (pos)
-		{
-		case 1:
-			DrawBigText("AGAIN.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
-			DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
-			break;
-		case 2:
-			DrawBigText("AGAIN.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
-			DrawBigText("RETURN_MENU.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+		if (change) {
+			switch (pos)
+			{
+			case 0:
+				DrawBigText("AGAIN.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
+				DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+				break;
+			case 1:
+				DrawBigText("AGAIN.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
+				DrawBigText("RETURN_MENU.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+			}
+			change = false;
 		}
-		NAVIGATOR = toupper(_getch());
-		if (NAVIGATOR == 'W') --pos;
-		else if (NAVIGATOR == 'S') ++pos;
-		if (pos > 2) pos = 1;
-		else if (pos < 1) pos = 2;
+		NAVIGATOR = 0;
+		if ((GetAsyncKeyState(0x57/*W Keys*/) & (1 << 15)) != 0)
+			NAVIGATOR = 'W';
+		else if ((GetAsyncKeyState(0x53/*S Keys*/) & (1 << 15)) != 0)
+			NAVIGATOR = 'S';
+		else if ((GetAsyncKeyState(VK_RETURN) & (1 << 15)) != 0)
+			NAVIGATOR = 13;
+		if (NAVIGATOR == 'W') { --pos; change = true; while ((GetAsyncKeyState(0x57/*W Keys*/) & (1 << 15)) != 0); }
+		else if (NAVIGATOR == 'S') { ++pos; change = true; while ((GetAsyncKeyState(0x53/*S Keys*/) & (1 << 15)) != 0); }
+		if (pos > 1) pos = 0;
+		else if (pos < 0) pos = 1;
 	} while (NAVIGATOR != 13);
-	if (pos == 1) return 'Y';
+	while ((GetAsyncKeyState(VK_RETURN) & (1 << 15)) != 0);
+	if (pos == 0) return 'Y';
 	return 'N';
 	/*return toupper(_getch());*/
 }
@@ -263,8 +274,8 @@ void ShowHelp()
 	const converter_type* converter = new converter_type;
 	const locale utf8_locale = locale(empty_locale, converter);
 	string filename = "HELP.txt";
-	int x = X_CENTER - 15;
-	int y = Y_CENTER/4;
+	int x = 0;
+	int y = 0;
 	wstring line;
 	int i = 0;
 	wifstream helpFile(filename.c_str());
@@ -308,4 +319,38 @@ _MENU MainMenu()
 
 
 	return menu;
+}
+
+void PrintNumber(int number, int x, int y, int color) {
+	GotoXY(x, y);
+	if (number >= 10) {
+		vector<int> v;
+		while (number > 0) {
+			v.push_back(number % 10);
+			number /= 10;
+		}
+		for (int j = v.size() - 1; j >= 0; j--) {
+			for (int k = 0; k < number_font[v[j]].size(); k++) {
+				PrintText(number_font[v[j]][k], color, x + (v.size() - j - 1) * number_font[v[(j == v.size() - 1 ? j : j + 1)]].size() + (v.size() - j - 1) * 1, y + k);
+			}
+		}
+	}
+	else {
+		int num = number % 10;
+		for (int i = 0; i < number_font[0].size(); i++)
+			PrintText(number_font[0][i], color, x, y + i);
+		for (int i = 0; i < number_font[num].size(); i++)
+			PrintText(number_font[num][i], color, x + number_font[0].size() + 2, y + i);
+	}
+}
+
+void TimeUpdate(int& seconds) {
+	--seconds;
+	if (seconds < 0) return;
+	EraseBox(LEFT + B_WIDTH * (BOARD_SIZE / 2), 1, 20, 3, c_def);
+	PrintNumber(0, LEFT + B_WIDTH * (BOARD_SIZE / 2), 1, seconds < 10 ? c_red : c_def);
+	EraseBox(LEFT + B_WIDTH * (BOARD_SIZE / 2) + number_font[0][0].size(), 1, number_font[0][0].size() + 1, number_font[0].size(), seconds < 10 ? c_red : c_def);
+	DrawBigText("DOUBLE_DOT.txt", (seconds < 10 ? c_red : c_def), LEFT + B_WIDTH * (BOARD_SIZE / 2) + number_font[0][0].size() + 1, 1);
+	PrintNumber(seconds, LEFT + B_WIDTH * (BOARD_SIZE / 2) + 7, 1, seconds < 10 ? c_red : c_def);
+	GotoXY(_X, _Y);
 }

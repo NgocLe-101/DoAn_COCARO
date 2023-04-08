@@ -43,4 +43,7 @@ void DrawMenuBackGround();
 
 void ShowHelp();
 
+void PrintNumber(int number, int x, int y, int color);
+
+void TimeUpdate(int& seconds);
 

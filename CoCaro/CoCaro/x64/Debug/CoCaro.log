@@ -1,2 +1,3 @@
-﻿  View.cpp
+﻿  CONTROL.cpp
+D:\Codes\DoAn_COCARO\CoCaro\CoCaro\CONTROL.cpp(133,7): warning C4101: 'loadOption': unreferenced local variable
   CoCaro.vcxproj -> D:\Codes\DoAn_COCARO\CoCaro\x64\Debug\CoCaro.exe

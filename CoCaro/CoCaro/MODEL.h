@@ -19,3 +19,7 @@ bool CheckWinCondition(int winner);
 int CheckWin(int x, int y, int& x_Won, int& y_Won, int& i_Won);
 
 int TestBoard();
+
+void TimeUpdating(high_resolution_clock::time_point& iniTime, int& seconds);
+
+void GetFont();
