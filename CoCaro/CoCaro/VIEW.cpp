@@ -264,7 +264,7 @@ void ShowHelp()
 	const locale utf8_locale = locale(empty_locale, converter);
 	string filename = "HELP.txt";
 	int x = X_CENTER - 15;
-	int y = Y_CENTER - 10;
+	int y = Y_CENTER/4;
 	wstring line;
 	int i = 0;
 	wifstream helpFile(filename.c_str());

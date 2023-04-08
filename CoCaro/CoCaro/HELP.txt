@@ -1,4 +1,4 @@
-********************************************
+﻿********************************************
 *              Welcome to Carox            *
 ********************************************
 *               Guide and Help             *
@@ -6,22 +6,21 @@
 
 ~~~~~~~~~~~~~~~~Window help~~~~~~~~~~~~~~~~~
 
-- Su dung cac phim mui ten va Enter
-  de chon menu tuong ung
-- Khi muon quay lai, an Esc
+- Sử dụng các phím mũi tên và Enter
+  để chọn menu tương ứng
+- Khi muốn quay lại, ấn Esc
 
 ~~~~~~~~~~~~~~~In Game help~~~~~~~~~~~~~~~~~
 
-- Su dung cac phim W/A/D/S hoac cac
-   phim mui ten de di chuyen.
-- An Enter/Space de danh.
+- Sử dụng các phím W/A/D/S hoặc các
+   phím mũi tên để di chuyển.
+- Ấn Enter/Space để đánh.
 
 ~~~~~~~~~~~~~~~~~~~Rule~~~~~~~~~~~~~~~~~~~~~
 
-- Nguoi choi thang khi co 4 quan co lien
-  tiep va khong bi chan o bat ky dau nao
-  (co the chan xa), hoac co 5 quan co lien
-  tiep va khong bi chan 2 dau.
+- Người chơi thắng khi có 4 quân cờ liên
+  tiếp và không bị chặn ở 2 đầu hoặc có 5
+  quân cờ liên tiếp
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
