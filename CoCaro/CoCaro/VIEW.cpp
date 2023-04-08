@@ -177,6 +177,24 @@ void DrawBorder(int x, int y, int width, int height, wchar_t border_type, int co
 	SetColor(c_def);
 }
 
+void DrawBorderSpecific(int x, int y, int width, int height,int color, wchar_t TOPLEFT, wchar_t TOPRIGHT, wchar_t BOTLEFT, wchar_t BOTRIGHT, wchar_t HORIZONTAL, wchar_t VERTICAL) {
+	GotoXY(x, y);
+	SetColor(color);
+	wcout << TOPLEFT;
+	for (int i = 1; i < width - 1; i++) wcout << HORIZONTAL;
+	wcout << TOPRIGHT;
+	for (int i = 1; i < height - 1; i++) {
+		GotoXY(x, y + i);
+		wcout << VERTICAL;
+		GotoXY(x + width - 1, y + i);
+		wcout << VERTICAL;
+	}
+	GotoXY(x, y + height - 1);
+	wcout << BOTLEFT;
+	for (int i = 1; i < width - 1; i++) wcout << HORIZONTAL;
+	wcout << BOTRIGHT;
+}
+
 void DrawInGameMenuUSING(int pos) {
 	if (pos >= 0) {
 		DrawBigText("SAVE.txt", pos == 0 ? c_def : c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14);
@@ -190,7 +208,6 @@ void DrawInGameMenuUSING(int pos) {
 	}
 }
 
-
 void DrawInGameMenu() {
 	DrawBigText("IG_TITLE.txt", c_red, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 2, _A[0][BOARD_SIZE - 1].y + 1);
 	DrawInGameMenuUSING(-1);
@@ -200,7 +217,7 @@ void DrawInGameMenu() {
 
 void DrawPlayer() {
 	DrawBigText("O_PLAYER.txt", c_lime, LEFT, 0);
-	int tempTime = 16;
+	int tempTime = TIME+1;
 	TimeUpdate(tempTime);
 	DrawBigText("X_PLAYER.txt", c_red, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
 	GotoXY(_X, _Y);
@@ -353,4 +370,15 @@ void TimeUpdate(int& seconds) {
 	DrawBigText("DOUBLE_DOT.txt", (seconds < 10 ? c_red : c_def), LEFT + B_WIDTH * (BOARD_SIZE / 2) + number_font[0][0].size() + 1, 1);
 	PrintNumber(seconds, LEFT + B_WIDTH * (BOARD_SIZE / 2) + 7, 1, seconds < 10 ? c_red : c_def);
 	GotoXY(_X, _Y);
+}
+
+void DrawLoadingScreen() {
+	system("cls");
+	DrawBigText("LOADING.txt", c_def, X_CENTER-20, Y_CENTER-10);
+	DrawBorderSpecific(0, Y_CENTER-5, 148, 3, c_def, (wchar_t)0x2552, (wchar_t)0x2555, (wchar_t)0x2558, (wchar_t)0x255B, (wchar_t)0x2550, (wchar_t)0x2502);
+	GotoXY(1, Y_CENTER - 5 + 1);
+	for (int i = 0; i < 146; ++i) {
+		wcout << L"█";
+		Sleep(10);
+	}
 }

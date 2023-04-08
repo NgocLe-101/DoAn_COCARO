@@ -17,7 +17,7 @@ int main()
 	FixConsoleWindow();
 	ChangeConsole();
 
-	int seconds = 15;
+	int seconds;
 	bool validEnter;
 	bool inGame = false;
 	bool TimeSwitch = false;
@@ -33,8 +33,9 @@ int main()
 		inGame = true;
 		if (option == 6||option==-1)
 			return 0;
+		DrawLoadingScreen();
 		StartGame();
-		seconds = 15;
+		seconds = TIME;
 		inGame = true;
 		TimeSwitch = false;
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
@@ -64,6 +65,7 @@ int main()
 				}
 				/*ExitGame();
 				return 1;*/
+				t1 = high_resolution_clock::now();
 				while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0) TimeUpdating(t1, seconds);
 			}
 			else {
@@ -102,16 +104,16 @@ int main()
 								c = AskContinue(winner);
 							} while (c != 'Y' && c != 'N');
 							if (c == 'Y') {
-								seconds = 16;
+								seconds = TIME + 1;
 								StartGame();
 							}	
 							else {
-								seconds = 15;
+								seconds = TIME;
 								inGame = false;
 							}
 							break;
 						default:
-							seconds = 16;
+							seconds = TIME + 1;
 							t1 = high_resolution_clock::now();
 							TimeUpdate(seconds);
 							TimeSwitch = true;
@@ -133,7 +135,7 @@ int main()
 							c = AskContinue(winner);
 						} while (c != 'Y' && c != 'N');
 						if (c == 'Y') {
-							seconds = 16;
+							seconds = TIME + 1;
 							StartGame();
 						}
 						else {
@@ -144,7 +146,6 @@ int main()
 				if (!TimeSwitch)
 					TimeUpdating(t1, seconds);
 			}
-			fflush(stdin);
 		}
 	}
 }

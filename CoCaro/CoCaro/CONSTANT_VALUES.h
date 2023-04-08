@@ -21,19 +21,20 @@ using namespace std::chrono;
 #define HEIGHT 720
 #define X_CENTER WIDTH / 16 + 2
 #define Y_CENTER HEIGHT / 32
-#define HORIZONTAL_LINE (wchar_t)0x2500
-#define VERTICAL_LINE (wchar_t)0x2502
-#define TOP_RIGHT (wchar_t)0x2510
-#define TOP_LEFT (wchar_t)0x250C
-#define BOTTOM_LEFT (wchar_t)0x2514
-#define BOTTOM_RIGHT (wchar_t)0x2518
-#define TOP_CROSS (wchar_t)0x252C
-#define BOTTOM_CROSS (wchar_t)0x2534
-#define	LEFT_CROSS (wchar_t)0x251C
-#define RIGHT_CROSS (wchar_t)0x2524
+#define HORIZONTAL_LINE (wchar_t)0x2550
+#define VERTICAL_LINE (wchar_t)0x2551
+#define TOP_RIGHT (wchar_t)0x2557
+#define TOP_LEFT (wchar_t)0x2554
+#define BOTTOM_LEFT (wchar_t)0x255A
+#define BOTTOM_RIGHT (wchar_t)0x255D
+#define TOP_CROSS (wchar_t)0x2566
+#define BOTTOM_CROSS (wchar_t)0x2569
+#define	LEFT_CROSS (wchar_t)0x2560
+#define RIGHT_CROSS (wchar_t)0x2563
+#define CROSS (wchar_t)0x256B
 #define HORIZONTAL_SPACE 5
 #define VERTIAL_SPACE 2
-#define CROSS (wchar_t)0x253C
+
 // BOX value
 #define B_WIDTH 4
 #define B_HEIGHT 1
@@ -55,7 +56,6 @@ using namespace std::chrono;
 // Drawing
 #define X_SYM (wchar_t)0x274C
 #define O_SYM (wchar_t)0x26AB
-#define TIMER (wchar_t)0x23F2
 // Box Drawing
 #define DL_T 1
 #define DL_T_VERTICAL (wchar_t)0x2551
@@ -68,6 +68,8 @@ using namespace std::chrono;
 #define DM_T_CORNER (wchar_t)0x25C7
 #define DM_T_HORIZONTAL (wchar_t)0xA60F
 #define DM_T_VERTICAL (wchar_t)0x2551
+// CLOCK VALUE
+#define TIME 10
 struct _POINT {
 	int x, y, c;
 }; // x: tọa độ dòng, y: tọa độ cột, c: đánh dấu

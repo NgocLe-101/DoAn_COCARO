@@ -47,3 +47,6 @@ void PrintNumber(int number, int x, int y, int color);
 
 void TimeUpdate(int& seconds);
 
+void DrawBorderSpecific(int x, int y, int width, int height, int color, wchar_t TOPLEFT, wchar_t TOPRIGHT, wchar_t BOTLEFT, wchar_t BOTRIGHT, wchar_t HORIZONTAL, wchar_t VERTICAL);
+
+void DrawLoadingScreen();
