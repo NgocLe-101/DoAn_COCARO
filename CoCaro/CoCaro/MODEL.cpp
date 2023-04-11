@@ -40,6 +40,13 @@ int CheckBoard(int pX, int pY) {
 	return 0;
 }
 
+_POINT randomPoint()
+{
+	int x = rand() % BOARD_SIZE;
+	int y = rand() % BOARD_SIZE;
+	return { x, y };
+}
+
 void PrintWinner(int whoWin, int color) {
 	SetColor(color);
 	if (whoWin == -1)

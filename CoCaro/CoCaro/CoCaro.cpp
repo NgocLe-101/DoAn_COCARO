@@ -55,6 +55,21 @@ int main()
 				_COMMAND = 'S';
 			else if ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0)
 				_COMMAND = 27;
+			if (option == 2 && _TURN == 1) {
+				_POINT ranPoint = randomPoint();
+				while (ranPoint.c != 0)
+				{
+					ranPoint = randomPoint();
+					if (ranPoint.c == 0)
+						break;
+				}
+				int x_p = ranPoint.x;
+				int y_p = ranPoint.y;
+				_X = _A[x_p][y_p].x;
+				_Y = _A[x_p][y_p].y;
+				GotoXY(_X, _Y);
+				_COMMAND = 13;
+			}
 			//_COMMAND = toupper(_getch());
 			if (seconds <= 0) _COMMAND = -1;
 			if (_COMMAND == 27) {
