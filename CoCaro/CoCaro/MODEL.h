@@ -10,6 +10,10 @@ void ExitGame();
 
 int CheckBoard(int pX, int pY);
 
+_POINT randomPoint();
+
+_POINT minDistance(_POINT point);
+
 void PrintWinner(int whoWin, int color);
 
 void HoverWinner(int x, int y, int i, int WhoWin, int color);
