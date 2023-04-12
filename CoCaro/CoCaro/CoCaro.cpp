@@ -21,6 +21,7 @@ int main()
 	bool validEnter;
 	bool inGame = false;
 	bool TimeSwitch = false;
+	_POINT mark_point = { 0, 0 };
 	while (true)
 	{
 		bool inMenu = true;
@@ -57,7 +58,7 @@ int main()
 				_COMMAND = 27;
 			if (option == 2 && _TURN == 1) {
 				_POINT ranPoint = randomPoint();
-				while (ranPoint.c != 0)
+				/*while (ranPoint.c != 0)
 				{
 					ranPoint = randomPoint();
 					if (ranPoint.c == 0)
@@ -66,7 +67,12 @@ int main()
 				int x_p = ranPoint.x;
 				int y_p = ranPoint.y;
 				_X = _A[x_p][y_p].x;
-				_Y = _A[x_p][y_p].y;
+				_Y = _A[x_p][y_p].y;*/
+				_POINT random_point = minDistance(mark_point);
+				int x_rdPoint = random_point.x;
+				int y_rdPoint = random_point.y;
+				_X = _A[x_rdPoint][y_rdPoint].x;
+				_Y = _A[x_rdPoint][y_rdPoint].y;
 				GotoXY(_X, _Y);
 				_COMMAND = 13;
 			}
@@ -95,6 +101,16 @@ int main()
 						SetColor(c_red);
 						wcout << X_SYM;
 						SetColor(c_def);
+						if (option == 2) {
+							for (int i = 0; i < BOARD_SIZE; i++) {
+								for (int j = 0; j < BOARD_SIZE; j++) {
+									if (_A[i][j].x == _X && _A[i][j].y == _Y) {
+										mark_point.x = i;
+										mark_point.y = j;
+									}
+								}
+							}
+						}
 						break;
 					case 1:
 						validEnter = true;

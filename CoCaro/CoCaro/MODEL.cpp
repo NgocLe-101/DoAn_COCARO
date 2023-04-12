@@ -47,6 +47,26 @@ _POINT randomPoint()
 	return { x, y };
 }
 
+_POINT minDistance(_POINT point) {
+	int minDist = INT_MAX;
+	int minI, minJ;
+	int random_time = BOARD_SIZE * BOARD_SIZE;
+	while (random_time != 0) {
+		_POINT p_temp = randomPoint();
+		int i = p_temp.x;
+		int j = p_temp.y;
+		int dist = sqrt(pow(point.x - i, 2) + pow(point.y - j, 2));
+		if (dist < minDist && _A[i][j].c == 0)
+		{
+			minDist = dist;
+			minI = i;
+			minJ = j;
+		}
+		random_time--;
+	}
+	return { minI, minJ };
+}
+
 void PrintWinner(int whoWin, int color) {
 	SetColor(color);
 	if (whoWin == -1)
