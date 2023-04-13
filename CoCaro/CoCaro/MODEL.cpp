@@ -47,7 +47,8 @@ _POINT computerPoint()
 	return { x, y };
 }
 
-_POINT minDistance(_POINT point) {
+_POINT minDistance(_POINT point) 
+{
 	int minDist = INT_MAX;
 	int minI, minJ;
 	int times = BOARD_SIZE * BOARD_SIZE;
@@ -70,14 +71,10 @@ _POINT minDistance(_POINT point) {
 _POINT closetCenter()
 {
 	int begin = (BOARD_SIZE - 1) / 2, end = (BOARD_SIZE - 1) / 2 + 1;
-	while (begin >= 0 && end <= BOARD_SIZE - 1)
-	{
-		for (int i = begin; i <= end; i++)
-		{
-			for (int j = begin; j <= end; j++)
-			{
-				if (_A[i][j].c == 0)
-				{
+	while (begin >= 0 && end <= BOARD_SIZE - 1) {
+		for (int i = begin; i <= end; i++) {
+			for (int j = begin; j <= end; j++) {
+				if (_A[i][j].c == 0) {
 					_POINT closest_point = { 0, 0 };
 					closest_point.x = i;
 					closest_point.y = j;

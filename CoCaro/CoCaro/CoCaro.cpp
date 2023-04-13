@@ -40,6 +40,7 @@ int main()
 		inGame = true;
 		TimeSwitch = false;
 		int check_turn = -1;
+		int count_turn = 0;
 		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		while (inGame)
 		{
@@ -72,11 +73,16 @@ int main()
 				_POINT comp_point = { 0, 0 };
 				if (check_turn == -1) {
 					comp_point = minDistance(mark_point);
+					count_turn++;
 					check_turn *= -1;
 				}
 				if (check_turn == 1) {
 					comp_point = closetCenter();
-					check_turn *= -1;
+					if (count_turn >= 2)
+					{
+						check_turn *= -1;
+						count_turn = 0;
+					}
 				}
 				int x_cPoint = comp_point.x;
 				int y_cPoint = comp_point.y;
@@ -115,10 +121,11 @@ int main()
 								for (int j = 0; j < BOARD_SIZE; j++) {
 									if (_A[i][j].x == _X && _A[i][j].y == _Y) {
 										mark_point.x = i;
-										mark_point.y = j; 
-									} 
-								} 
-							} 
+										mark_point.y = j;
+										break;
+									}
+								}
+							}
 						}
 						break;
 					case 1:
