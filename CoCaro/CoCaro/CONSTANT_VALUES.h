@@ -10,6 +10,8 @@
 #include <fcntl.h>
 #include <io.h>
 #include <chrono>
+#include <cstdlib>
+#include <cmath>
 using namespace std;
 using namespace std::chrono;
 //Constant Values

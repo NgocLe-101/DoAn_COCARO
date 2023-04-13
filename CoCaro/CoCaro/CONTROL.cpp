@@ -141,9 +141,9 @@ void RunMainMenu(bool& run, int option)
 			break;
 
 		case 2:
-			/*
-				Danh voi may
-			*/
+			// PLAYER VS COMPUTER
+			run = false;
+			break;
 		case 3:
 			/*system("cls");
 			loadOption = SelectMenu(LoadingMenu());
