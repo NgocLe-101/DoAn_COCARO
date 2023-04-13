@@ -10,9 +10,11 @@ void ExitGame();
 
 int CheckBoard(int pX, int pY);
 
-_POINT randomPoint();
+_POINT computerPoint();
 
 _POINT minDistance(_POINT point);
+
+_POINT closetCenter();
 
 void PrintWinner(int whoWin, int color);
 

@@ -40,19 +40,20 @@ int CheckBoard(int pX, int pY) {
 	return 0;
 }
 
-_POINT randomPoint()
+_POINT computerPoint()
 {
 	int x = rand() % BOARD_SIZE;
 	int y = rand() % BOARD_SIZE;
 	return { x, y };
 }
 
-_POINT minDistance(_POINT point) {
+_POINT minDistance(_POINT point) 
+{
 	int minDist = INT_MAX;
 	int minI, minJ;
-	int random_time = BOARD_SIZE * BOARD_SIZE;
-	while (random_time != 0) {
-		_POINT p_temp = randomPoint();
+	int times = BOARD_SIZE * BOARD_SIZE;
+	while (times != 0) {
+		_POINT p_temp = computerPoint();
 		int i = p_temp.x;
 		int j = p_temp.y;
 		int dist = sqrt(pow(point.x - i, 2) + pow(point.y - j, 2));
@@ -62,9 +63,27 @@ _POINT minDistance(_POINT point) {
 			minI = i;
 			minJ = j;
 		}
-		random_time--;
+		times -= 1;
 	}
 	return { minI, minJ };
+}
+
+_POINT closetCenter()
+{
+	int begin = (BOARD_SIZE - 1) / 2, end = (BOARD_SIZE - 1) / 2 + 1;
+	while (begin >= 0 && end <= BOARD_SIZE - 1) {
+		for (int i = begin; i <= end; i++) {
+			for (int j = begin; j <= end; j++) {
+				if (_A[i][j].c == 0) {
+					_POINT closest_point = { 0, 0 };
+					closest_point.x = i;
+					closest_point.y = j;
+					return closest_point;
+				}
+			}
+		}
+		begin -= 1; end += 1;
+	}
 }
 
 void PrintWinner(int whoWin, int color) {
