@@ -55,5 +55,44 @@
     <Text Include="HELP.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="AGAIN.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="DOUBLE_DOT.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="DRAW.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="EXITGAME_SCREEN.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="IG_TITLE.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="LOADING.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="MUTE.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="O_PLAYER.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="O_WIN.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="RETURN_MENU.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="TIMER.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="X_PLAYER.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="X_WIN.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

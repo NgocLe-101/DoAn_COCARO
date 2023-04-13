@@ -31,8 +31,8 @@
 						~~~~~~~~~~~~~~~~~~~Rule~~~~~~~~~~~~~~~~~~~~~
 						
 						- Người chơi thắng khi có 4 quân cờ liên
-						  tiếp và không bị chặn ở 2 đầu hoặc có 5
-						  quân cờ liên tiếp
-						
+						  tiếp không bị chặn ở 2 đầu và đối thủ 
+						  không thắng thể thắng trong nước tiếp theo
+						  hoặc có 5 quân cờ liên tiếp
 						~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						        -Press Esc to turn back-

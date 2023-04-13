@@ -254,11 +254,11 @@ int AskContinue(int pWhoWin) {
 			{
 			case 0:
 				DrawBigText("AGAIN.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
-				DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+				DrawBigText("RETURN_MENU.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
 				break;
 			case 1:
 				DrawBigText("AGAIN.txt", c_gray, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 5);
-				DrawBigText("RETURN_MENU.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 4, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
+				DrawBigText("RETURN_MENU.txt", pWhoWin == -1 ? c_red : (pWhoWin == 1 ? c_lime : c_dblue), _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 7, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y + 2);
 			}
 			change = false;
 		}

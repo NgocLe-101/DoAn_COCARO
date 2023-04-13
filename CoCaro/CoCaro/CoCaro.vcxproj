@@ -141,8 +141,21 @@
   <ItemGroup>
     <Text Include="..\Assets\IN_GAME\SETTINGS\EXIT.txt" />
     <Text Include="..\Assets\IN_GAME\SETTINGS\SAVE.txt" />
+    <Text Include="AGAIN.txt" />
     <Text Include="CARO.txt" />
+    <Text Include="DOUBLE_DOT.txt" />
+    <Text Include="DRAW.txt" />
+    <Text Include="EXITGAME_SCREEN.txt" />
     <Text Include="HELP.txt" />
+    <Text Include="IG_TITLE.txt" />
+    <Text Include="LOADING.txt" />
+    <Text Include="MUTE.txt" />
+    <Text Include="O_PLAYER.txt" />
+    <Text Include="O_WIN.txt" />
+    <Text Include="RETURN_MENU.txt" />
+    <Text Include="TIMER.txt" />
+    <Text Include="X_PLAYER.txt" />
+    <Text Include="X_WIN.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
