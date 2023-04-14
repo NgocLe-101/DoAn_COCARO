@@ -1,5 +1,202 @@
 ﻿#include "MODEL.h"
 
+void SetPlayer(_PLAYER& _PLAYER1, _PLAYER& _PLAYER2, vector<_PLAYER>& players)
+{
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+	do
+	{
+		system("cls");
+		wcin.ignore();
+		DrawBorder(X_CENTER - 30, Y_CENTER - 2, 80, 5, DL_T, c_dblue);
+		PrintText(L"ENTER PLAYER1'S NAME (2-10 CHARACTER):  ", 241, X_CENTER - 24, Y_CENTER);
+		wcin >> _PLAYER1.name;
+		_PLAYER1.wins = 0;
+	} while (_PLAYER1.name.length() < 2 || _PLAYER1.name.length() > 10);
+
+	do
+	{
+		system("cls");
+		DrawBorder(X_CENTER - 30, Y_CENTER - 2, 80, 5, DL_T, c_red);
+		PrintText(L"ENTER PLAYER2'S NAME (2-10 CHARACTER):  ", 252, X_CENTER - 24, Y_CENTER);
+		wcin >> _PLAYER2.name;
+		_PLAYER2.wins = 0;
+	} while (_PLAYER2.name.length() < 2 || _PLAYER2.name.length() > 10 || _PLAYER2.name == _PLAYER1.name);
+	_PLAYER1 = LoadPlayer(_PLAYER1, players);
+	SortPlayerList(players);
+	_PLAYER2 = LoadPlayer(_PLAYER2, players);
+	SortPlayerList(players);
+}
+
+bool CheckNameFile(wstring x)
+{
+	x = x + L".txt";
+	vector<wstring> SAVE;
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "saveName.txt";
+	wstring save1;
+	wifstream saveName(filename.c_str());
+	saveName.imbue(utf8_locale);
+	while (getline(saveName, save1))
+	{
+		SAVE.push_back(save1);
+	}
+	for (int i = 0; i < SAVE.size(); i++)
+		if (SAVE[i] == x)
+		{
+			return false;
+		}
+	return true;
+}
+
+void SaveName(_POINT _A[][BOARD_SIZE], wstring& x, _PLAYER& _PLAYER1, _PLAYER& _PLAYER2, int& color)
+{
+	vector<wstring> SAVE;
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "saveName.txt";
+	wifstream saveName(filename.c_str());
+	saveName.imbue(utf8_locale);
+	while (CheckNameFile(x) == false)
+	{
+		wcout << "Da ton tai!" << endl << "Nhap lai: ";
+		wcin >> x;
+	}
+	x += L".txt";
+	saveName.close();
+	wofstream saveName1(filename.c_str(), std::ios_base::app);
+	saveName1.imbue(utf8_locale);
+	saveName1 << x << "\n";
+	wstring filename2 = x;
+	wofstream saveName2(filename2.c_str());
+	saveName2.imbue(utf8_locale);
+	saveName2 << _PLAYER1.name << "\n" << _PLAYER1.wins << "\n";
+	saveName2 << _PLAYER2.name << "\n" << _PLAYER2.wins << "\n" << color << "\n";
+
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			_A[i][j].x = HORIZONTAL_SPACE * j + LEFT + 2;
+			_A[i][j].y = VERTIAL_SPACE * i + TOP + 1;
+			saveName2 << _A[i][j].c << "\n";
+		}
+	}
+}
+
+vector<_PLAYER> GetPlayerList()
+{
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = PLAYER_LIST;
+	wifstream playerList(filename.c_str());
+	playerList.imbue(utf8_locale);
+	_PLAYER player;
+	vector<_PLAYER> players;
+	wstring clear;
+	wstring name;
+	while (getline(playerList, player.name))
+	{
+		getline(playerList, clear);
+		player.rank = stoi(clear);
+		player.wins = 0;
+		players.push_back(player);
+	}
+	return players;
+}
+
+int CheckPlayerExistence(_PLAYER player, vector<_PLAYER>& players)
+{
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		if (players[i].name == player.name) {
+			players[i].rank++;
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void SavePlayer(_PLAYER player, vector<_PLAYER>& players)
+{
+	system("cls");
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = PLAYER_LIST;
+	wofstream playerListout(filename.c_str(), std::ios_base::app);
+	playerListout.imbue(utf8_locale);
+	players = GetPlayerList();
+	int exist = CheckPlayerExistence(player, players);
+	if (exist == -1)
+	{
+		players.push_back(player);
+		players[players.size() - 1].rank = 0;
+		playerListout << player.name << "\n" << player.rank << "\n";
+	}
+	else
+		players[exist].wins = player.wins;
+}
+
+_PLAYER LoadPlayer(_PLAYER player, vector<_PLAYER>& players)
+{
+	players = GetPlayerList();
+	int exist = CheckPlayerExistence(player, players);
+
+	if (exist == -1)
+	{
+		player.wins = 0;
+		SavePlayer(player, players);;
+		return player;
+	}
+	else
+		return players[exist];
+}
+
+void SortPlayerList(vector<_PLAYER>& playerList)
+{
+	_PLAYER key;
+	for (int i = 0; i < playerList.size() - 1; i++)
+		for (int j = i + 1; j < playerList.size(); j++)
+			if (playerList[i].rank < playerList[j].rank)
+			{
+				key = playerList[i];
+				playerList[i] = playerList[j];
+				playerList[j] = key;
+			}
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename1 = PLAYER_LIST;
+	string filename = PLAYER_LIST_OUT;
+	wofstream playerListout(filename.c_str());
+	playerListout.imbue(utf8_locale);
+	wofstream playerList1(filename1.c_str());
+	playerList1.imbue(utf8_locale);
+	for (int i = 0; i < 3; i++)
+		playerListout << playerList[i].name << endl << playerList[i].rank << endl;
+	for (int i = 0; i < playerList.size(); i++)
+		playerList1 << playerList[i].name << endl << playerList[i].rank << endl;
+}
+
+void Update_Rank(vector<_PLAYER>& players, _PLAYER player)
+{
+	for (int i = 0; i < players.size(); i++)
+		if (players[i].name == player.name)
+			players[i].rank += 2;
+	SortPlayerList(players);
+}
+
 void ResetData() {
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
@@ -15,8 +212,36 @@ void ResetData() {
 	_TURN = -1;
 	_COMMAND = -1;
 	_X = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].x; _Y = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].y;
+}
+
+void LoadData(_POINT _A[][BOARD_SIZE], int& cl) {
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+		{
+			_A[i][j].x = HORIZONTAL_SPACE * j + LEFT + 2;
+			_A[i][j].y = VERTIAL_SPACE * i + TOP + 1;
+			if (_A[i][j].c == -1) {
+				GotoXY(_A[i][j].x, _A[i][j].y);
+				SetColor(c_red);
+				wcout << X_SYM;
+				SetColor(c_def);
+			}
+			else if (_A[i][j].c == 1) {
+				GotoXY(_A[i][j].x, _A[i][j].y);
+				SetColor(c_green);
+				wcout << O_SYM;
+				SetColor(c_def);
+			}
+		}
+	}
+	_TURN = -cl;
+	_COMMAND = -1;
+	_X = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].x; _Y = _A[BOARD_SIZE / 2 - 1][BOARD_SIZE / 2 - 1].y;
 
 }
+
+
 
 void GabageCollect() {
 	// Cleaning resources if needed

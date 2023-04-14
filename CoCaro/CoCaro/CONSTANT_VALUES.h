@@ -19,8 +19,8 @@ using namespace std::chrono;
 #define BOARD_SIZE 16
 #define LEFT 10
 #define TOP 5
-#define WIDTH 1100
-#define HEIGHT 720
+#define WIDTH 1050
+#define HEIGHT 700
 #define X_CENTER WIDTH / 16 + 2
 #define Y_CENTER HEIGHT / 32
 #define HORIZONTAL_LINE (wchar_t)0x2550
@@ -67,8 +67,8 @@ using namespace std::chrono;
 #define DL_T_BOTLEFTCORNER (wchar_t)0x255A
 #define DL_T_BOTRIGHTCORNER (wchar_t)0x255D
 #define DM_T 2
-#define DM_T_CORNER (wchar_t)0x25C7
-#define DM_T_HORIZONTAL (wchar_t)0xA60F
+#define DM_T_CORNER (wchar_t)0x255A
+#define DM_T_HORIZONTAL (wchar_t)0x2550
 #define DM_T_VERTICAL (wchar_t)0x2551
 // CLOCK VALUE
 #define TIME 10
@@ -88,10 +88,22 @@ struct _MENU
 	int cursorColor; //Mau con tro chon menu
 };
 
+struct _PLAYER
+{
+	wstring name; //Ten nguoi choi
+	int wins = 0;	 //Dem so tran thang
+	int rank; //Xep hang cua nguoi choi
+};
+
+#pragma comment (lib,"winmm.lib") //dung cho PlaySoundA()
+
 #define ENTER 13
 #define ESC 27
 #define ARROW_UP 72
 #define ARROW_DOWN 80
 #define ARROW_LEFT 75
 #define ARROW_RIGHT 77
+
+#define PLAYER_LIST "PlayerList.txt" //Thong tin cac player da choi 
+#define PLAYER_LIST_OUT "PlayerListout.txt" //Thong tin cac player da choi game
 

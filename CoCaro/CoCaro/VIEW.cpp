@@ -1,4 +1,9 @@
 ﻿#include "View.h"
+#include <mmsystem.h>//THU VIEN DUNG AM THANH
+#include"MODEL.h"
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
 
 void FixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -14,10 +19,17 @@ void ChangeConsole() {
 	HWND hDesktop = GetDesktopWindow();
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTitleA("Co Caro");
+	CONSOLE_FONT_INFOEX font;
+	font.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+	GetCurrentConsoleFontEx(hConsole, FALSE, &font);
+	font.dwFontSize.X = 13; // font width
+	font.dwFontSize.Y = 16; // font height
+	wcscpy_s(font.FaceName, L"Impact"); // font name
+	SetCurrentConsoleFontEx(hConsole, FALSE, &font);
+	SetConsoleTitleA("Caro Game");
 	SetConsoleTextAttribute(hConsole, c_def);
 	GetWindowRect(hDesktop, &r);
-	MoveWindow(consoleWindow, r.right/2-WIDTH/2, r.bottom/2-HEIGHT/2, WIDTH, HEIGHT, true);
+	MoveWindow(consoleWindow, r.right / 2 - WIDTH / 2, r.bottom / 2 - HEIGHT / 2, WIDTH, HEIGHT, true);
 }
 
 void DrawTableLine(int numOfCol, wchar_t mainSym, wchar_t subSym, int width)
@@ -215,11 +227,24 @@ void DrawInGameMenu() {
 	GotoXY(_X, _Y);
 }
 
-void DrawPlayer() {
-	DrawBigText("O_PLAYER.txt", c_lime, LEFT, 0);
-	int tempTime = TIME+1;
+void DrawPlayer(int COLOR) {
+	DrawBorder(22, 0, 15, 5, DL_T, c_dblue);
+	DrawBorder(67, 0, 15, 5, DL_T, c_dblue);
+	PrintText(L"NAME: ", 241, 24, 1);
+	PrintText(L"WON: ", 241, 24, 3);
+	PrintText(L"NAME: ", 241, 69, 1);
+	PrintText(L"WON: ", 241, 69, 3);
+	if (COLOR == -1)//NHAN LUOT DANH VAO NEU LOAD GAME
+	{
+		DrawBigText("O_PLAYER.txt", c_green, LEFT, 0);
+		DrawBigText("X_PLAYER.txt", c_gray, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
+	}
+	else {
+		DrawBigText("O_PLAYER.txt", c_gray, LEFT, 0);
+		DrawBigText("X_PLAYER.txt", c_red, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
+	}
+	int tempTime = TIME + 1;
 	TimeUpdate(tempTime);
-	DrawBigText("X_PLAYER.txt", c_red, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
 	GotoXY(_X, _Y);
 }
 
@@ -228,12 +253,15 @@ int ProcessFinish(int pWhoWin) {
 	switch (pWhoWin)
 	{
 	case -1:
+		PlaySound(TEXT("win.wav"), NULL, SND_FILENAME);
 		DrawBigText("X_WIN.txt", 228, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 20, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 20, 80);
 		break;
 	case 1:
+		PlaySound(TEXT("win.wav"), NULL, SND_FILENAME);
 		DrawBigText("O_WIN.txt", 174, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 20, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 20, 80);
 		break;
 	case 0:
+		PlaySound(TEXT("win.wav"), NULL, SND_FILENAME);
 		DrawBigText("DRAW.txt", 158, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].x - 20, _A[BOARD_SIZE / 2][BOARD_SIZE / 2].y - 20, 80);
 		break;
 	case 2:
@@ -308,6 +336,35 @@ void ShowHelp()
 	}
 }
 
+void AboutUs()
+{
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "ABOUTUS.txt";
+	int x = X_CENTER - 18;
+	int y = Y_CENTER / 4;
+	wstring line;
+	int i = 0;
+	wifstream ABOUTUS(filename.c_str());
+	ABOUTUS.imbue(utf8_locale);
+	/*std::fstream helpFile;
+	helpFile.open("Help.txt", std::fstream::in);*/
+
+	system("cls");
+
+	DrawBigText("ABOUTUSBT.txt", 225, 47, 1, 50);
+	DrawBigText("ABOUTUS1.txt", c_red, 100, 3);
+
+	DrawBorder(X_CENTER - 10, Y_CENTER - 10, 40, 30, DL_T, c_dblue);
+	while (getline(ABOUTUS, line))
+	{
+		PrintText(line, 244, x + 9, y + i + 10);
+		i++;
+	}
+}
+
 void DrawMenuBackGround()
 {
 	
@@ -317,25 +374,95 @@ _MENU MainMenu()
 {
 	_MENU menu;
 
-	menu.options = 6;
-	menu.x = X_CENTER - 13;
-	menu.y = Y_CENTER + 5;
+	menu.options = 7;
+	menu.x = X_CENTER - 7;
+	menu.y = Y_CENTER + 9;
 	menu.cursorColor = 244;
+	system("cls");
+	DrawBigText("CARO.txt", 225, 38, 1, 50);
+	DrawBigText("MENUDS1.txt", c_red, 45, 9);
+	DrawBigText("MENUDS2.txt", c_def, 67, 15);
+	DrawBigText("MENUDS3.txt", c_green, 85, 9);
+	DrawBigText("MENUDS4.txt", c_green, 100, 30);
+	DrawBigText("MENUDS4.txt", c_red, 25, 30);
+	DrawBorder(menu.x - 9, Y_CENTER + 5 - 2, 45, 15, DL_T, c_dblue);
+	PrintText(L"***************************", 241, menu.x, menu.y - 3);
+	PrintText(L"*      WELCOME TO OUR CARO GAME     *", 241, menu.x - 5, menu.y - 2);
+	PrintText(L"***************************", 241, menu.x, menu.y - 1);
+	PrintText(L"       PLAYER vs PLAYER        ", 241, menu.x, menu.y);
+	PrintText(L"       PLAYER vs COMPUTER         ", 241, menu.x, menu.y + 1);
+	PrintText(L"       LOAD GAME         ", 241, menu.x, menu.y + 2);
+	PrintText(L"       RANKING         ", 241, menu.x, menu.y + 3);
+	PrintText(L"       HELP           ", 241, menu.x, menu.y + 4);
+	PrintText(L"       ABOUT US        ", 241, menu.x, menu.y + 5);
+	PrintText(L"       EXIT GAME       ", 241, menu.x, menu.y + 6);
+	return menu;
+}
+
+void ShowRank()
+{
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = PLAYER_LIST_OUT;
+	int x = X_CENTER + 5;
+	int y = Y_CENTER / 4 + 10;
+	int n = 225;
+	wstring line;
+	int i = 0;
+	wifstream RANK(filename.c_str());
+	RANK.imbue(utf8_locale);
+	/*std::fstream helpFile;
+	helpFile.open("Help.txt", std::fstream::in);*/
 
 	system("cls");
-	DrawBigText("CARO.txt", 252, X_CENTER - 35, 1);
-	PrintText(L"***************************", 244, menu.x, menu.y - 3);
-	PrintText(L"*Chào mừng các bạn đến với game caro*", 244, menu.x - 5, menu.y - 2);
-	PrintText(L"***************************", 244, menu.x, menu.y - 1);
-	PrintText(L"         Chơi với người        ", 244, menu.x, menu.y);
-	PrintText(L"         Chơi với máy          ", 244, menu.x, menu.y + 1);
-	PrintText(L"         Lưu game         ", 244, menu.x, menu.y + 2);
-	PrintText(L"         Bảng xếp hạng          ", 244, menu.x, menu.y + 3);
-	PrintText(L"         Trợ giúp            ", 244, menu.x, menu.y + 4);
-	PrintText(L"         Thoát game         ", 244, menu.x, menu.y + 5);
+	DrawBigText("TOPRANK.txt", 228, 55, 1, 50);
+	DrawBorder(X_CENTER - 9, Y_CENTER - 10, 30, 20, DL_T, 224);
+	while (getline(RANK, line))
+	{
+		PrintText(line, n++, x, y + i);
+		if (i % 2 == 0) i++;
+		else
+			i += 5;
+	}
+	PrintText(L"BACK TO MENU - ESC", 224, x - 8, y + i);
+}
 
+void ShowPlayerInfo(_POINT _A[][BOARD_SIZE], _PLAYER _PLAYER1, _PLAYER _PLAYER2)
+{
 
-	return menu;
+	PrintText(_PLAYER1.name, 241, 30, 1);
+	PrintText(_PLAYER2.name, 241, 75, 1);
+	PrintText(to_wstring(_PLAYER1.wins), 241, 30, 3);
+	PrintText(to_wstring(_PLAYER2.wins), 241, 75, 3);
+	GotoXY(_X, _Y);
+}
+
+void Loadedfile(int& n, vector<wstring>& filenamesave)
+{
+	n = 0;
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	string filename = "saveName.txt";
+	int x = X_CENTER - 18;
+	int y = Y_CENTER / 4;
+	wstring line;
+	wifstream SAVEFILE(filename.c_str());
+	SAVEFILE.imbue(utf8_locale);
+	/*std::fstream helpFile;
+	helpFile.open("Help.txt", std::fstream::in);*/
+
+	system("cls");
+	DrawBigText("Loadfilemenu.txt", 228, 55, 1, 50);
+	DrawBorder(X_CENTER - 20, Y_CENTER - 13, 57, 30, DL_T, c_red);
+	while (getline(SAVEFILE, line))
+	{
+		filenamesave.push_back(line);
+		n++;
+	}
 }
 
 void PrintNumber(int number, int x, int y, int color) {
@@ -381,4 +508,18 @@ void DrawLoadingScreen() {
 		wcout << L"█";
 		Sleep(10);
 	}
+}
+
+_MENU SaveFileMenu(int& n, vector<wstring>& filenamesave)
+{
+	_MENU menu;
+	menu.x = X_CENTER - 5;
+	menu.y = Y_CENTER - 10;
+	menu.cursorColor = 244;
+	Loadedfile(n, filenamesave);
+	menu.options = n + 1;
+	for (int i = 0; i < n; i++)
+		PrintText(filenamesave[i], 241, X_CENTER + 2, menu.y + i);
+	PrintText(L"BACK TO MENU", 226, X_CENTER + 2, menu.y + n);
+	return menu;
 }

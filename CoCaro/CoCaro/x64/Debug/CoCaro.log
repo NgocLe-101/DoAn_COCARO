@@ -1,14 +1,2 @@
 ﻿  CoCaro.cpp
-  CONTROL.cpp
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\CONTROL.cpp(133,7): warning C4101: 'loadOption': unreferenced local variable
-  MODEL.cpp
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\MODEL.cpp(59,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  View.cpp
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\View.cpp(349,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\View.cpp(351,155): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\View.cpp(360,78): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\View.cpp(369,157): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\View.cpp(370,131): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-D:\Codes\DoAn_COCARO\CoCaro\CoCaro\MODEL.cpp(87): warning C4715: 'closetCenter': not all control paths return a value
   CoCaro.vcxproj -> D:\Codes\DoAn_COCARO\CoCaro\x64\Debug\CoCaro.exe

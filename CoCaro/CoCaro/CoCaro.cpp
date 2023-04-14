@@ -9,14 +9,20 @@ int _TURN; //true là lượt người thứ nhất và false là lượt ngư�
 int _COMMAND; // Biến nhận giá trị phím người dùng nhập
 int _X, _Y; //Tọa độ hiện hành trên màn hình bàn cờ
 vector<vector<wstring>> number_font; // Vector chứa font số
-
+_PLAYER _PLAYER1, _PLAYER2;
+vector<_PLAYER> players;
+wstring x;
+int exit1 = 0;//LUU NEU CHON THOAT TRONG MENUINGAME
+int COLOR = 0;//MAU THE HIEN LUOT DANH DAU TIEN = LUOT DANH DAU TIEN
+char c;
 int main()
 {
 	_setmode(_fileno(stdin), _O_U16TEXT);
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	FixConsoleWindow();
 	ChangeConsole();
-
+	int posis = 0;
+	int save = 0;
 	int seconds;
 	bool validEnter;
 	bool inGame = false;
@@ -28,14 +34,17 @@ int main()
 		int option = -2;
 		do
 		{
+			PlaySoundA("nhacnen.wav", NULL, SND_ASYNC | SND_LOOP);
 			option = SelectMenu(MainMenu());
-			RunMainMenu(inMenu, option);
+			RunMainMenu(inMenu, option, _PLAYER1, _PLAYER2, players, COLOR, _A);
 		} while (inMenu);
 		inGame = true;
-		if (option == 6||option==-1)
+		if (option == 7||option==-1)
 			return 0;
-		DrawLoadingScreen();
-		StartGame();
+		//DrawLoadingScreen();
+		StartGame(_PLAYER1, _PLAYER2, players, COLOR);
+		int checkload = COLOR;
+		COLOR = 0;
 		seconds = TIME;
 		inGame = true;
 		TimeSwitch = false;
@@ -58,6 +67,8 @@ int main()
 				_COMMAND = 'S';
 			else if ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0)
 				_COMMAND = 27;
+			else if ((GetAsyncKeyState(VK_SPACE) & (1 << 15)) != 0)// TRUY CAP MENU NHAN NUT CACH
+				_COMMAND = 32;
 			if (option == 2 && _TURN == 1) {
 				/*_POINT ranPoint = randomPoint();
 				while (ranPoint.c != 0)
@@ -94,13 +105,27 @@ int main()
 			//_COMMAND = toupper(_getch());
 			if (seconds <= 0) _COMMAND = -1;
 			if (_COMMAND == 27) {
-				if (!StartInGameMENU()) {
+				StartInGameMENU(posis, _PLAYER1, _PLAYER2, COLOR, save, exit1);
+				if (save == 1)
+				{
+					PrintText(L"NameFile: ", 241, 0, 40);
+					wcin >> x;
+					SaveName(_A, x, _PLAYER1, _PLAYER2, COLOR);
+					system("cls");
+					ExitGame();
 					DrawExit();
-					Sleep(100);
 					return 0;
 				}
-				/*ExitGame();
-				return 1;*/
+				//DOI MAU NUT MUTE
+				if (posis % 2 != 0) DrawBigText("MUTE.txt", c_dblue, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
+				else
+					DrawBigText("MUTE.txt", c_gray, _A[0][BOARD_SIZE - 1].x + B_WIDTH * 6, _A[0][BOARD_SIZE - 1].y + 14 + IM_SPACE);
+				if (exit1 != 0)
+				{
+					ExitGame();
+					DrawExit();
+					return 0;
+				}
 				t1 = high_resolution_clock::now();
 				while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0) TimeUpdating(t1, seconds);
 			}
@@ -115,6 +140,10 @@ int main()
 						validEnter = true;
 						SetColor(c_red);
 						wcout << X_SYM;
+						COLOR = -1;//LUU LUOT DANH NEU CO LOAD GAME
+						if (posis % 2 == 0) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME);
+						DrawBigText("O_PLAYER.txt", c_green, LEFT, 0);
+						DrawBigText("X_PLAYER.txt", c_gray, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
 						SetColor(c_def);
 						if (option == 2) {
 							for (int i = 0; i < BOARD_SIZE; i++) {
@@ -132,6 +161,10 @@ int main()
 						validEnter = true;
 						SetColor(c_green);
 						wcout << O_SYM;
+						COLOR = 1;
+						if (posis % 2 == 0) PlaySound(TEXT("tick.wav"), NULL, SND_FILENAME);
+						DrawBigText("O_PLAYER.txt", c_gray, LEFT, 0);
+						DrawBigText("X_PLAYER.txt", c_red, LEFT + B_WIDTH * (BOARD_SIZE + 1) + 5, 0);
 						SetColor(c_def);
 						break;
 					case 0:
@@ -143,7 +176,13 @@ int main()
 						switch (winner)
 						{
 						case -1:
+							_PLAYER2.wins++;
+							players = GetPlayerList();//lAY LAI DANH SACH NEU LOAD GAME
+							Update_Rank(players, _PLAYER2);
 						case 1:
+							_PLAYER1.wins++;
+							players = GetPlayerList();
+							Update_Rank(players, _PLAYER1);
 						case 0:
 							char c;
 							do
@@ -152,9 +191,12 @@ int main()
 							} while (c != 'Y' && c != 'N');
 							if (c == 'Y') {
 								seconds = TIME + 1;
-								StartGame();
+								COLOR = 0;
+
+								StartGame(_PLAYER1, _PLAYER2, players, COLOR);
 							}	
 							else {
+								COLOR = 0;
 								seconds = TIME;
 								inGame = false;
 							}
@@ -174,7 +216,13 @@ int main()
 					switch (winner)
 					{
 					case -1:
+						_PLAYER2.wins++;
+						players = GetPlayerList();
+						Update_Rank(players, _PLAYER2);
 					case 1:
+						_PLAYER1.wins++;
+						players = GetPlayerList();
+						Update_Rank(players, _PLAYER1);
 					case 0:
 						char c;
 						do
@@ -183,7 +231,8 @@ int main()
 						} while (c != 'Y' && c != 'N');
 						if (c == 'Y') {
 							seconds = TIME + 1;
-							StartGame();
+							COLOR = 0;
+							StartGame(_PLAYER1, _PLAYER2, players, COLOR);
 						}
 						else {
 							inGame = false;

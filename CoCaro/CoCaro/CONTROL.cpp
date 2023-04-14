@@ -1,16 +1,45 @@
-#include "CONTROL.h"
-
-void StartGame() {
+﻿#include "CONTROL.h"
+#include <mmsystem.h>
+vector<wstring>sf;
+int n = 0;
+int kt;//CHON MENU LOAD GAME
+int cl = 0;//lUOT DANH LOAD FILE LUU TRUNG VOI MAU X - O
+void StartGame(_PLAYER& _PLAYER1, _PLAYER& _PLAYER2, vector<_PLAYER>& players, int& cl) {
 	system("cls");
-	ResetData();
+	PlaySound(TEXT("NoSound.wav"), NULL, SND_FILENAME);
+	DrawBigText("LOADING.txt", 245, X_CENTER - 35, 15);
+	for (int i = 0; i < 10; i++)
+	{
+		DrawBigText("LOADING1.txt", 245, X_CENTER + i * 4 + 23, 15);
+		Sleep(200);
+	}
+	system("cls");
 	GetFont();
+	//LAP LAI HAI LAN DE HIEN THI KHONG BI CHE BOI BAN CO
+	if (cl != 0)
+	{
+		LoadData(_A, cl);
+		DrawPlayer(cl);
+	}
+	else
+	{
+		ResetData();
+		DrawPlayer(cl);
+	}
 	DrawBoard(BOARD_SIZE);
+
+	if (cl != 0)
+	{
+		LoadData(_A, cl);
+	}
+	else ResetData();
 	DrawInGameMenu();
-	DrawPlayer();
+	ShowPlayerInfo(_A, _PLAYER1, _PLAYER2);
 }
 
-bool StartInGameMENU() {
-	Sleep(100);
+bool StartInGameMENU(int& pos1, _PLAYER& _PLAYER1, _PLAYER& _PLAYER2, int& COLOR, int& save, int& exit) {
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));//KHONG NHAP KI TU THUA BO NHO DEM
+	Sleep(50);
 	int pos = 0;
 	int NAVIGATE = 0;
 	bool change = true;
@@ -42,9 +71,20 @@ bool StartInGameMENU() {
 			while ((GetAsyncKeyState(0x53/*S Keys*/) & (1 << 15)) != 0);
 			break;
 		case 13:
-			if (pos == 0) {/*save */ }
-			else if (pos == 1) {/*mute */ }
-			else if (pos == 2) { ExitGame(); return 0; }
+			if (pos == 0) {
+				save = 1;
+				return 0;
+				break;
+			}
+			else if (pos == 1) {
+				pos1++;
+				return 0;
+				break;
+			}
+			else if (pos == 2) { ExitGame();
+				exit = 1;
+				return 0;
+			}
 			change = true;
 			while ((GetAsyncKeyState(VK_RETURN) & (1 << 15)) != 0);
 			break;
@@ -91,7 +131,7 @@ int SelectMenu(_MENU menu)
 	int cursor = 1;
 	char key = 0;
 
-	PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y);
+	PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y);
 
 	do
 	{
@@ -106,16 +146,16 @@ int SelectMenu(_MENU menu)
 			key = 27;
 		if (key == ARROW_UP && cursor > 1)
 		{
-			PrintText(L"    ", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			PrintText(L"       ", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			cursor--;
-			PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			while ((GetAsyncKeyState(VK_UP) & (1 << 15)) != 0);
 		}
 		else if (key == ARROW_DOWN && cursor < menu.options)
 		{
-			PrintText(L"    ", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			PrintText(L"       ", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			cursor++;
-			PrintText(L"--->", menu.cursorColor, menu.x - 4, menu.y + cursor - 1);
+			PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			while ((GetAsyncKeyState(VK_DOWN) & (1 << 15)) != 0);
 		}
 		else if (key == ESC)
@@ -128,8 +168,8 @@ int SelectMenu(_MENU menu)
 	return cursor;
 }
 
-void RunMainMenu(bool& run, int option)
-	{
+void RunMainMenu(bool& run, int option, _PLAYER& _PLAYER1, _PLAYER& _PLAYER2, vector<_PLAYER>& players, int& cl, _POINT _A[][BOARD_SIZE])
+{
 		int loadOption;
 		switch (option)
 		{
@@ -137,6 +177,7 @@ void RunMainMenu(bool& run, int option)
 			/*SetPlayer(_PLAYER1, _PLAYER2);
 			StartGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
 			RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);*/
+			SetPlayer(_PLAYER1, _PLAYER2, players);
 			run = false;
 			break;
 
@@ -145,26 +186,26 @@ void RunMainMenu(bool& run, int option)
 			run = false;
 			break;
 		case 3:
-			/*system("cls");
-			loadOption = SelectMenu(LoadingMenu());
-			if (loadOption == -1) break;
-			else
-			{
-				LoadGame(RunLoadingMenu(loadOption), _A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
-				RunGame(_A, _PLAYER1, _PLAYER2, _TURN, _COMMAND, _X, _Y);
-				break;
-			}*/
+			Loadedfile(n, sf);
+			kt = SelectMenu(SaveFileMenu(n, sf));
+			if (kt == n + 1) break;// NEU CHON BACK TO MENU
+			RunLoad(_A, kt, _PLAYER1, _PLAYER2, sf, n, cl);
+			run = false;
+			break;
 		case 4:
-			/*do
-			{
-				ShowRank();
-			} while (_getch() != ESC);
-			break;*/
+			ShowRank();
+			while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) == 0);
+			break;
 		case 5:
 			ShowHelp();
 			while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) == 0);
 			break;
-		case 6:case -1:
+		case 6:
+			AboutUs();
+			while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) == 0);
+			break;
+		
+		case 7:case -1:
 			ExitGame();
 			DrawExit();
 			Sleep(100);
@@ -173,3 +214,24 @@ void RunMainMenu(bool& run, int option)
 		}
 	}
 
+void RunLoad(_POINT _A[][BOARD_SIZE], int option, _PLAYER& _PLAYER1, _PLAYER& _PLAYER2, vector<wstring>& filenamesave, int n, int& COLOR)
+{
+	const locale empty_locale = locale::empty();
+	typedef codecvt_utf8<wchar_t> converter_type;
+	const converter_type* converter = new converter_type;
+	const locale utf8_locale = locale(empty_locale, converter);
+	wstring filename = filenamesave[option - 1];
+	wifstream save(filename.c_str());
+	save.imbue(utf8_locale);
+	getline(save, _PLAYER1.name);
+	save >> _PLAYER1.wins;
+	save.ignore();
+	getline(save, _PLAYER2.name);
+	save >> _PLAYER2.wins;
+	save >> COLOR;
+	for (int i = 0; i < BOARD_SIZE; i++)
+	{
+		for (int j = 0; j < BOARD_SIZE; j++)
+			save >> _A[i][j].c;
+	}
+}

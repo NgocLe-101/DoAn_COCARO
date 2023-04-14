@@ -29,7 +29,7 @@ void DrawInGameMenuUSING(int pos);
 
 void DrawInGameMenu();
 
-void DrawPlayer();
+void DrawPlayer(int COLOR);
 
 int ProcessFinish(int pWhoWin);
 
@@ -43,6 +43,8 @@ void DrawMenuBackGround();
 
 void ShowHelp();
 
+void AboutUs();
+
 void PrintNumber(int number, int x, int y, int color);
 
 void TimeUpdate(int& seconds);
@@ -50,3 +52,9 @@ void TimeUpdate(int& seconds);
 void DrawBorderSpecific(int x, int y, int width, int height, int color, wchar_t TOPLEFT, wchar_t TOPRIGHT, wchar_t BOTLEFT, wchar_t BOTRIGHT, wchar_t HORIZONTAL, wchar_t VERTICAL);
 
 void DrawLoadingScreen();
+
+void ShowPlayerInfo(_POINT _A[][BOARD_SIZE], _PLAYER _PLAYER1, _PLAYER _PLAYER2);
+void ShowRank();
+
+void Loadedfile(int& n, vector<wstring>& filenamesave);
+_MENU SaveFileMenu(int& n, vector<wstring>& filenamesave);

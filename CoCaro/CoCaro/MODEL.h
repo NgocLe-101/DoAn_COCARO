@@ -2,6 +2,8 @@
 #include "CONSTANT_VALUES.h"
 #include "View.h"
 
+void Update_Rank(vector<_PLAYER>& players, _PLAYER player);
+
 void ResetData();
 
 void GabageCollect();
@@ -29,3 +31,14 @@ int TestBoard();
 void TimeUpdating(high_resolution_clock::time_point& iniTime, int& seconds);
 
 void GetFont();
+void SetPlayer(_PLAYER& _PLAYER1, _PLAYER& _PLAYER2, vector<_PLAYER>& players);
+vector<_PLAYER> GetPlayerList();
+
+int CheckPlayerExistence(_PLAYER player, vector<_PLAYER>& players);
+void SavePlayer(_PLAYER player, vector<_PLAYER>& players);
+
+_PLAYER LoadPlayer(_PLAYER player, vector<_PLAYER>& players);
+void SortPlayerList(vector<_PLAYER>& playerList);
+void SaveName(_POINT _A[][BOARD_SIZE], wstring& x, _PLAYER& _PLAYER1, _PLAYER& _PLAYER2, int& color);
+bool CheckNameFile(wstring x);
+void LoadData(_POINT _A[][BOARD_SIZE], int& cl);
