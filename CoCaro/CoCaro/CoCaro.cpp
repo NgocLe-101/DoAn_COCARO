@@ -179,10 +179,42 @@ int main()
 							_PLAYER2.wins++;
 							players = GetPlayerList();//lAY LAI DANH SACH NEU LOAD GAME
 							Update_Rank(players, _PLAYER2);
+							do
+							{
+								c = AskContinue(winner);
+							} while (c != 'Y' && c != 'N');
+							if (c == 'Y') {
+								seconds = TIME + 1;
+								COLOR = 0;
+
+								StartGame(_PLAYER1, _PLAYER2, players, COLOR);
+							}
+							else {
+								COLOR = 0;
+								seconds = TIME;
+								inGame = false;
+							}
+							break;
 						case 1:
 							_PLAYER1.wins++;
 							players = GetPlayerList();
 							Update_Rank(players, _PLAYER1);
+							do
+							{
+								c = AskContinue(winner);
+							} while (c != 'Y' && c != 'N');
+							if (c == 'Y') {
+								seconds = TIME + 1;
+								COLOR = 0;
+
+								StartGame(_PLAYER1, _PLAYER2, players, COLOR);
+							}
+							else {
+								COLOR = 0;
+								seconds = TIME;
+								inGame = false;
+							}
+							break;
 						case 0:
 							char c;
 							do
@@ -219,10 +251,42 @@ int main()
 						_PLAYER2.wins++;
 						players = GetPlayerList();
 						Update_Rank(players, _PLAYER2);
+						do
+						{
+							c = AskContinue(winner);
+						} while (c != 'Y' && c != 'N');
+						if (c == 'Y') {
+							seconds = TIME + 1;
+							COLOR = 0;
+
+							StartGame(_PLAYER1, _PLAYER2, players, COLOR);
+						}
+						else {
+							COLOR = 0;
+							seconds = TIME;
+							inGame = false;
+						}
+						break;
 					case 1:
 						_PLAYER1.wins++;
 						players = GetPlayerList();
 						Update_Rank(players, _PLAYER1);
+						do
+						{
+							c = AskContinue(winner);
+						} while (c != 'Y' && c != 'N');
+						if (c == 'Y') {
+							seconds = TIME + 1;
+							COLOR = 0;
+
+							StartGame(_PLAYER1, _PLAYER2, players, COLOR);
+						}
+						else {
+							COLOR = 0;
+							seconds = TIME;
+							inGame = false;
+						}
+						break;
 					case 0:
 						char c;
 						do
