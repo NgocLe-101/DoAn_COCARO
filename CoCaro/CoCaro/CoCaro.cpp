@@ -57,13 +57,13 @@ int main()
 			_COMMAND = 0;
 			if ((GetAsyncKeyState(VK_RETURN) & (1 << 15)) != 0)
 				_COMMAND = 13;
-			else if ((GetAsyncKeyState(0x57/*W Keys*/) & (1 << 15)) != 0)
+			else if ((GetAsyncKeyState(W_KEY) & (1 << 15)) != 0)
 				_COMMAND = 'W';
-			else if ((GetAsyncKeyState(0x41/*A Keys*/) & (1 << 15)) != 0)
+			else if ((GetAsyncKeyState(A_KEY) & (1 << 15)) != 0)
 				_COMMAND = 'A';
-			else if ((GetAsyncKeyState(0x44/*D Keys*/) & (1 << 15)) != 0)
+			else if ((GetAsyncKeyState(D_KEY) & (1 << 15)) != 0)
 				_COMMAND = 'D';
-			else if ((GetAsyncKeyState(0x53/*S Keys*/) & (1 << 15)) != 0)
+			else if ((GetAsyncKeyState(S_KEY) & (1 << 15)) != 0)
 				_COMMAND = 'S';
 			else if ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0)
 				_COMMAND = 27;
@@ -130,10 +130,10 @@ int main()
 				while ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0) TimeUpdating(t1, seconds);
 			}
 			else {
-				if (_COMMAND == 'A') { MoveLeft(); while ((GetAsyncKeyState(0x41/*A Keys*/) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
-				else if (_COMMAND == 'W') { MoveUp(); while ((GetAsyncKeyState(0x57/*W Keys*/) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
-				else if (_COMMAND == 'S') { MoveDown(); while ((GetAsyncKeyState(0x53/*S Keys*/) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
-				else if (_COMMAND == 'D') { MoveRight(); while ((GetAsyncKeyState(0x44/*D Keys*/) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
+				if (_COMMAND == 'A') { MoveLeft(); while ((GetAsyncKeyState(A_KEY) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
+				else if (_COMMAND == 'W') { MoveUp(); while ((GetAsyncKeyState(W_KEY) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
+				else if (_COMMAND == 'S') { MoveDown(); while ((GetAsyncKeyState(S_KEY) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
+				else if (_COMMAND == 'D') { MoveRight(); while ((GetAsyncKeyState(D_KEY) & (1 << 15)) != 0) TimeUpdating(t1, seconds); }
 				else if (_COMMAND == 13) {
 					switch (CheckBoard(_X, _Y)) {
 					case -1:

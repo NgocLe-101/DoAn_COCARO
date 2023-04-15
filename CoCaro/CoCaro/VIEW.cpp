@@ -523,3 +523,26 @@ _MENU SaveFileMenu(int& n, vector<wstring>& filenamesave)
 	PrintText(L"BACK TO MENU", 226, X_CENTER + 2, menu.y + n);
 	return menu;
 }
+
+void MenuEffect(high_resolution_clock::time_point& iniTime, int& sw)
+{
+	high_resolution_clock::time_point finalTime = high_resolution_clock::now();
+	duration<double> time_span = finalTime - iniTime;
+	if (time_span.count() >= 1) {
+		iniTime = finalTime;
+		if(sw == 1)
+		{
+			DrawBigText("MENUDS1.txt", c_red, 45, 9);
+			DrawBigText("MENUDS3.txt", c_gray, 85, 9);
+			sw = -1;
+		}
+		else
+		{
+			DrawBigText("MENUDS3.txt", c_green, 85, 9);
+			DrawBigText("MENUDS1.txt", c_gray, 45, 9);
+
+			sw = 1;
+		}
+
+	}
+}

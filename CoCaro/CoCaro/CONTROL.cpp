@@ -129,7 +129,9 @@ void MoveUp() {
 int SelectMenu(_MENU menu)
 {
 	int cursor = 1;
-	char key = 0;
+	int key = 0;
+	high_resolution_clock::time_point t1;
+	int sw = 1;
 
 	PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y);
 
@@ -138,31 +140,31 @@ int SelectMenu(_MENU menu)
 		key = 0;
 		if ((GetAsyncKeyState(VK_RETURN) & (1 << 15)) != 0)
 			key = 13;
-		else if ((GetAsyncKeyState(VK_UP) & (1 << 15)) != 0)
-			key = ARROW_UP;
-		else if ((GetAsyncKeyState(VK_DOWN) & (1 << 15)) != 0)
-			key = ARROW_DOWN;
+		else if ((GetAsyncKeyState(W_KEY) & (1 << 15)) != 0)
+			key = 'W';
+		else if ((GetAsyncKeyState(S_KEY) & (1 << 15)) != 0)
+			key = 'S';
 		else if ((GetAsyncKeyState(VK_ESCAPE) & (1 << 15)) != 0)
 			key = 27;
-		if (key == ARROW_UP && cursor > 1)
+		if (key == 'W' && cursor > 1)
 		{
 			PrintText(L"       ", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			cursor--;
 			PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
-			while ((GetAsyncKeyState(VK_UP) & (1 << 15)) != 0);
+			while ((GetAsyncKeyState(W_KEY) & (1 << 15)) != 0) MenuEffect(t1,sw);
 		}
-		else if (key == ARROW_DOWN && cursor < menu.options)
+		else if (key == 'S' && cursor < menu.options)
 		{
 			PrintText(L"       ", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
 			cursor++;
 			PrintText(L"▀▀ ▀▀", menu.cursorColor, menu.x - 1, menu.y + cursor - 1);
-			while ((GetAsyncKeyState(VK_DOWN) & (1 << 15)) != 0);
+			while ((GetAsyncKeyState(S_KEY) & (1 << 15)) != 0) MenuEffect(t1, sw);
 		}
 		else if (key == ESC)
 		{
 			return -1;
 		}
-
+		MenuEffect(t1, sw);	
 		
 	} while (key != ENTER);
 	return cursor;
