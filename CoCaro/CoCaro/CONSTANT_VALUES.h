@@ -97,12 +97,14 @@ struct _PLAYER
 
 #pragma comment (lib,"winmm.lib") //dung cho PlaySoundA()
 
+// KEY VALUE
 #define ENTER 13
 #define ESC 27
-#define ARROW_UP 72
-#define ARROW_DOWN 80
-#define ARROW_LEFT 75
-#define ARROW_RIGHT 77
+#define A_KEY 0x41
+#define W_KEY 0x57
+#define S_KEY 0x53
+#define D_KEY 0x44
+
 
 #define PLAYER_LIST "PlayerList.txt" //Thong tin cac player da choi 
 #define PLAYER_LIST_OUT "PlayerListout.txt" //Thong tin cac player da choi game

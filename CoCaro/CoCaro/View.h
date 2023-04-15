@@ -58,3 +58,5 @@ void ShowRank();
 
 void Loadedfile(int& n, vector<wstring>& filenamesave);
 _MENU SaveFileMenu(int& n, vector<wstring>& filenamesave);
+
+void MenuEffect(high_resolution_clock::time_point& iniTime, int& sw);

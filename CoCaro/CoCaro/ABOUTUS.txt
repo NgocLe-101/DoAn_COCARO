@@ -22,5 +22,5 @@
 
     -----------------------------
 
-       -PRESS ECS TO TURN BACK-
+       -PRESS ESC TO TURN BACK-
 

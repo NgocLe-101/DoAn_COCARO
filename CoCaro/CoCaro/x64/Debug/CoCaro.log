@@ -1,2 +1,10 @@
-﻿  CoCaro.cpp
-  CoCaro.vcxproj -> D:\Codes\DoAn_COCARO\CoCaro\x64\Debug\CoCaro.exe
+﻿  CONTROL.cpp
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\CONTROL.cpp(175,7): warning C4101: 'loadOption': unreferenced local variable
+  View.cpp
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\View.cpp(476,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\View.cpp(478,155): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\View.cpp(487,78): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\View.cpp(496,157): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\CoCaro\View.cpp(497,131): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  CoCaro.vcxproj -> C:\Users\NGAN\Desktop\Clone caro\DoAn_COCARO\CoCaro\x64\Debug\CoCaro.exe
